@@ -1,0 +1,1 @@
+export { HotspotCanvas } from "./HotspotCanvas";
