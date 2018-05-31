@@ -3,6 +3,10 @@ import { FunctionalComponent, h } from "preact";
 import { Overlay } from "../Overlay";
 import * as styles from "./HotspotCanvas.scss";
 
+import hotspots from "../fixtures/shapes.json";
+
+console.log(hotspots);
+
 interface Props {
     image: string;
     width: number;
@@ -23,7 +27,7 @@ export const HotspotCanvas: FunctionalComponent<Props> = ({
     };
     return (
         <div className={styles.base} style={newStyle}>
-            <Overlay width={width} height={height} />
+            <Overlay width={width} height={height} hotspots={hotspots} />
         </div>
     );
 };
