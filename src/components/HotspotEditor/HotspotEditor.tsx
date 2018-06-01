@@ -15,7 +15,7 @@ interface Props {
     width: number;
     height: number;
     hotspots: HotspotShape[];
-    saveHotspots?: (hotspots: HotspotShape[]) => void;
+    saveHotspots?: (hotspots: HotspotShape[], selectedHotspot?: number) => void;
     image?: string;
 }
 interface State {
@@ -45,7 +45,7 @@ export class HotspotEditor extends Component<Props, State> {
             selectedIndex: undefined,
             selectedHotspot
         });
-        this.props.saveHotspots(hs);
+        this.props.saveHotspots(hs, selectedHotspot);
     };
     public render() {
         return (

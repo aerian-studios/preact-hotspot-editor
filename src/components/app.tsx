@@ -14,6 +14,7 @@ if ((module as any).hot) {
 
 interface State {
     hotspots?: HotspotShape[];
+    selectedHotspot?: number;
 }
 
 const INITIAL_STATE: State = {
@@ -27,9 +28,12 @@ export default class App extends Component {
         this.setState({ hotspots: sampleHotspots });
     }
 
-    public saveHotspots = (hotspots: HotspotShape[]) => {
-        console.log("save", hotspots);
-        this.setState({ hotspots });
+    public saveHotspots = (
+        hotspots: HotspotShape[],
+        selectedHotspot?: number
+    ) => {
+        console.log("save", hotspots, selectedHotspot);
+        this.setState({ hotspots, selectedHotspot });
     };
     public render() {
         return (
