@@ -33,7 +33,7 @@ export default class App extends Component {
     };
     public render() {
         return (
-            <div id="app">
+            <div id="app" className={styles.app}>
                 <HotspotEditor
                     image={"./assets/complications.png"}
                     width={778}
@@ -41,6 +41,7 @@ export default class App extends Component {
                     hotspots={this.state.hotspots}
                     saveHotspots={this.saveHotspots}
                 />
+                <textarea>{JSON.stringify(this.state.hotspots)}</textarea>
             </div>
         );
     }
