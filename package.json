@@ -41,6 +41,7 @@
     "lint-staged": "^7.1.0",
     "node-sass": "^4.9.0",
     "preact-cli": "^2.1.0",
+    "preact-cli-plugin-netlify": "^1.1.0",
     "preact-render-spy": "^1.2.1",
     "prettier": "^1.12.1",
     "ts-jest": "^22.4.6",

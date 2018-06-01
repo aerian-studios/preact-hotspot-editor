@@ -501,7 +501,7 @@ export class Overlay extends Component<Props, State> {
                     <Hotspot
                         key={index}
                         hotspot={hotspot}
-                        colour={ColourList[index]}
+                        colour={ColourList[index % 10]}
                         selected={this.state.currentHotspot === index}
                         onClick={() => this.setState({ currentHotspot: index })}
                         onVertexMouseDown={(ev, vertex) =>
