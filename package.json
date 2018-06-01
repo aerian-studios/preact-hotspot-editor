@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "react-hotspot-editor",
+  "name": "preact-hotspot-editor",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
