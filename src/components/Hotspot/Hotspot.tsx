@@ -12,6 +12,7 @@ interface Props {
     onClick: MouseHandler;
     onVertexMouseDown: CornerHandler;
     onClickLine: (ev: MouseEvent, segment: number) => void;
+    incomplete?: boolean;
 }
 
 type MouseHandler = (ev: MouseEvent) => void;
@@ -21,7 +22,8 @@ type CornerHandler = (ev: MouseEvent, index: number) => void;
 const makeHandle = (
     point: Point,
     index: number,
-    onVertexMouseDown: CornerHandler
+    onVertexMouseDown: CornerHandler,
+    highlight = false
 ) => {
     return (
         <rect
@@ -30,7 +32,7 @@ const makeHandle = (
             y={point[1] - 5}
             width={10}
             height={10}
-            strokeWidth={2}
+            stroke-width={highlight ? 4 : 2}
             stroke="black"
             fill="white"
             onMouseDown={ev => onVertexMouseDown(ev, index)}
@@ -40,7 +42,8 @@ const makeHandle = (
 
 const getHandles = (
     hotspot: HotspotShape,
-    onHandleMouseDown: CornerHandler
+    onHandleMouseDown: CornerHandler,
+    incomplete = false
 ) => {
     switch (hotspot.type) {
         case "ellipse":
@@ -68,7 +71,12 @@ const getHandles = (
             ];
         case "polygon":
             return hotspot.points.map((point, index) =>
-                makeHandle(point, index, onHandleMouseDown)
+                makeHandle(
+                    point,
+                    index,
+                    onHandleMouseDown,
+                    incomplete && index === hotspot.points.length - 1
+                )
             );
 
         case "rect":
@@ -95,9 +103,13 @@ const getHandles = (
 
 const getLine = (
     hotspot: PolygonHotspot,
-    onClickLine: (ev: MouseEvent, segment: number) => void
+    onClickLine: (ev: MouseEvent, segment: number) => void,
+    incomplete = false
 ) =>
     hotspot.points.map((point, index) => {
+        if (incomplete && index === hotspot.points.length - 1) {
+            return;
+        }
         const next =
             index === hotspot.points.length - 1
                 ? hotspot.points[0]
@@ -169,14 +181,17 @@ export const Hotspot: FunctionalComponent<Props> = ({
     onMouseDown,
     onClick,
     onVertexMouseDown,
-    onClickLine
+    onClickLine,
+    incomplete = false
 }) => {
     return (
         <svg draggable={false}>
             {[
                 getShape(hotspot, colour, onMouseDown, onClick),
-                selected && isPolygon(hotspot) && getLine(hotspot, onClickLine),
-                selected && getHandles(hotspot, onVertexMouseDown)
+                selected &&
+                    isPolygon(hotspot) &&
+                    getLine(hotspot, onClickLine, incomplete),
+                selected && getHandles(hotspot, onVertexMouseDown, incomplete)
             ]}
         </svg>
     );

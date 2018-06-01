@@ -34,6 +34,8 @@ interface State {
 }
 
 export class Overlay extends Component<Props, State> {
+    public svg!: SVGSVGElement;
+
     public constructor(props: Props) {
         super(props);
         this.state = {
@@ -290,6 +292,19 @@ export class Overlay extends Component<Props, State> {
         });
     };
 
+    public convertToSVGCoordinates = (
+        x: number,
+        y: number
+    ): { x: number; y: number } => {
+        if (this.svg === null) {
+            return { x, y };
+        }
+        const pt = this.svg.createSVGPoint();
+        pt.x = x;
+        pt.y = y;
+        return pt.matrixTransform(this.svg.getScreenCTM()!.inverse());
+    };
+
     public onClickLine = (ev: MouseEvent, segment: number) => {
         if (typeof this.state.currentHotspot === "undefined") {
             return;
@@ -301,15 +316,17 @@ export class Overlay extends Component<Props, State> {
             return;
         }
         const points = [...currentHotspot.points];
+        const point = this.convertToSVGCoordinates(ev.clientX, ev.clientY);
         console.log(JSON.stringify(points));
         console.log(
             "inserting",
             [ev.clientX, ev.clientY],
+            [point.x, point.y],
             "after",
             points[segment],
             ev
         );
-        points.splice(segment + 1, 0, [ev.clientX, ev.clientY]);
+        points.splice(segment + 1, 0, [point.x, point.y]);
         console.log(JSON.stringify(points));
 
         hotspots.splice(this.state.currentHotspot, 1);
@@ -330,6 +347,7 @@ export class Overlay extends Component<Props, State> {
                 onMouseMove={this.state.mouseMove}
                 onMouseUp={this.state.mouseUp}
                 onMouseLeave={this.state.mouseUp}
+                ref={ref => (this.svg = ref)}
             >
                 {this.state.hotspots.map((hotspot, index) => (
                     <Hotspot
