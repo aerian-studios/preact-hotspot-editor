@@ -6,7 +6,7 @@ import * as styles from "./Toolbar.scss";
 interface Props {
     style?: any;
     labels: string[];
-    selectedIndex: number;
+    selectedIndex?: number;
 
     onPress: (index: number) => void;
 }

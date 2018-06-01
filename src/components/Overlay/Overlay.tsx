@@ -4,6 +4,7 @@ import { ColourList } from "../../lib/ColourList";
 import {
     EllipseHotspot,
     HotspotShape,
+    HotspotType,
     isPolygon,
     Point,
     PolygonHotspot,
@@ -17,10 +18,9 @@ interface Props {
     width: number;
     height: number;
     hotspots: HotspotShape[];
+    drawingTool?: HotspotType;
+    stopEditing?: (hotspots: HotspotShape[]) => void;
 }
-
-type StateName = "start" | "dragging" | "resizing";
-type ActionType = "SHAPE_DOWN" | "HANDLE_DOWN" | "MOUSE_UP";
 
 interface State {
     currentHotspot?: number;
@@ -31,6 +31,8 @@ interface State {
     currentVertex?: number;
     mouseMove?: (event: MouseEvent) => void;
     mouseUp?: (event: MouseEvent) => void;
+    mouseDown?: (event: MouseEvent) => void;
+    onClick?: (event: MouseEvent) => void;
 }
 
 export class Overlay extends Component<Props, State> {
@@ -41,6 +43,46 @@ export class Overlay extends Component<Props, State> {
         this.state = {
             hotspots: props.hotspots
         };
+    }
+
+    public getDerivedStateFromProps(
+        props: Partial<Props>,
+        state: State
+    ): State {
+        console.log("get derived state", props);
+        switch (props.drawingTool) {
+            case "polygon":
+                return {
+                    ...state,
+                    onClick: this.addPolygonPoint,
+                    mouseDown: undefined,
+                    currentHotspot: undefined
+                };
+
+            case "rect":
+                return {
+                    ...state,
+                    onClick: undefined,
+                    mouseDown: this.startRect,
+                    currentHotspot: undefined
+                };
+
+            case "ellipse":
+                return {
+                    ...state,
+                    onClick: undefined,
+                    mouseDown: this.startEllipse,
+                    currentHotspot: undefined
+                };
+
+            default:
+                return { ...state, onClick: undefined, mouseDown: undefined };
+        }
+    }
+
+    public componentWillReceiveProps(props: Props) {
+        const newState = this.getDerivedStateFromProps(props, this.state);
+        this.setState(newState);
     }
 
     public moveHotspot = (x: number, y: number) => {
@@ -151,7 +193,7 @@ export class Overlay extends Component<Props, State> {
         deltaY: number,
         hotspot: EllipseHotspot
     ): EllipseHotspot => {
-        let { cx, cy, rx, ry } = hotspot;
+        let { rx, ry } = hotspot;
         const { currentVertex } = this.state;
         if (typeof currentVertex === "undefined") {
             return hotspot;
@@ -197,7 +239,7 @@ export class Overlay extends Component<Props, State> {
             }
         }
 
-        return { ...hotspot, cx, cy, rx, ry };
+        return { ...hotspot, rx, ry };
     };
 
     public movePolygonVertex = (
@@ -249,15 +291,38 @@ export class Overlay extends Component<Props, State> {
     };
 
     public doneMove = (ev: MouseEvent) => {
+        ev.preventDefault();
+        ev.cancelBubble = true;
         this.setState({
             currentVertex: undefined,
             initialPoint: undefined,
             mouseMove: undefined,
             mouseUp: undefined
         });
+        this.restoreClickHandler();
+        if (this.props.drawingTool !== "polygon") {
+            this.save();
+        }
+    };
+
+    public save = () => {
+        if (this.props.stopEditing) {
+            this.props.stopEditing(this.state.hotspots);
+        }
+    };
+
+    public restoreClickHandler = () => {
+        if (this.props.drawingTool === "polygon") {
+            window.setTimeout(() => {
+                this.setState({ onClick: this.addPolygonPoint });
+            }, 500);
+        }
     };
     public startMove = (ev: MouseEvent, currentHotspot: number) => {
         ev.preventDefault();
+        if (currentHotspot !== this.state.currentHotspot) {
+            this.save();
+        }
         const initialHotspot: HotspotShape = {
             ...this.state.hotspots[currentHotspot]
         };
@@ -267,6 +332,7 @@ export class Overlay extends Component<Props, State> {
             );
         }
         this.setState({
+            onClick: undefined,
             currentHotspot,
             initialHotspot,
             initialPoint: [ev.clientX, ev.clientY],
@@ -282,7 +348,9 @@ export class Overlay extends Component<Props, State> {
     ) => {
         console.log("move vertex", currentVertex);
         ev.preventDefault();
+        ev.cancelBubble = true;
         this.setState({
+            onClick: undefined,
             currentHotspot,
             currentVertex,
             initialHotspot: { ...this.state.hotspots[currentHotspot] },
@@ -305,7 +373,85 @@ export class Overlay extends Component<Props, State> {
         return pt.matrixTransform(this.svg.getScreenCTM()!.inverse());
     };
 
+    public addPolygonPoint = (ev: MouseEvent) => {
+        let hotspot: HotspotShape;
+        const hotspots = [...this.state.hotspots];
+        let currentHotspot = this.state.currentHotspot;
+        if (
+            typeof currentHotspot === "undefined" ||
+            !isPolygon(hotspots[currentHotspot])
+        ) {
+            hotspot = {
+                type: "polygon",
+                points: []
+            };
+            hotspots.push(hotspot);
+            currentHotspot = this.state.hotspots.length;
+        } else {
+            hotspot = hotspots[currentHotspot];
+        }
+        if (!isPolygon(hotspot)) {
+            return;
+        }
+        const point = this.convertToSVGCoordinates(ev.clientX, ev.clientY);
+        hotspot.points = [...hotspot.points, [point.x, point.y]];
+        this.setState({
+            hotspots,
+            currentHotspot
+        });
+    };
+
+    public startEllipse = (ev: MouseEvent) => {
+        ev.preventDefault();
+        const { x, y } = this.convertToSVGCoordinates(ev.clientX, ev.clientY);
+        const hotspot: EllipseHotspot = {
+            type: "ellipse",
+            cx: x,
+            cy: y,
+            rx: 0,
+            ry: 0
+        };
+        const hotspots = [...this.state.hotspots, hotspot];
+
+        this.setState({
+            mouseDown: undefined,
+            onClick: undefined,
+            currentHotspot: hotspots.length - 1,
+            currentVertex: 0,
+            initialHotspot: hotspot,
+            initialPoint: [ev.clientX, ev.clientY],
+            mouseMove: this.vertexShouldMove,
+            mouseUp: this.doneMove
+        });
+    };
+
+    public startRect = (ev: MouseEvent) => {
+        ev.preventDefault();
+        const { x, y } = this.convertToSVGCoordinates(ev.clientX, ev.clientY);
+        const hotspot: RectHotspot = {
+            type: "rect",
+            x,
+            y,
+            width: 0,
+            height: 0
+        };
+        const hotspots = [...this.state.hotspots, hotspot];
+
+        this.setState({
+            mouseDown: undefined,
+            onClick: undefined,
+            currentHotspot: hotspots.length - 1,
+            currentVertex: 0,
+            initialHotspot: hotspot,
+            initialPoint: [ev.clientX, ev.clientY],
+            mouseMove: this.vertexShouldMove,
+            mouseUp: this.doneMove
+        });
+    };
+
     public onClickLine = (ev: MouseEvent, segment: number) => {
+        ev.preventDefault();
+        ev.cancelBubble = true;
         if (typeof this.state.currentHotspot === "undefined") {
             return;
         }
@@ -341,12 +487,14 @@ export class Overlay extends Component<Props, State> {
         const { width, height } = this.props;
         return (
             <svg
-                className={styles.base}
+                className={this.props.drawingTool && styles.editing}
                 width={width}
                 height={height}
                 onMouseMove={this.state.mouseMove}
                 onMouseUp={this.state.mouseUp}
                 onMouseLeave={this.state.mouseUp}
+                onMouseDown={this.state.mouseDown}
+                onClick={this.state.onClick}
                 ref={ref => (this.svg = ref)}
             >
                 {this.state.hotspots.map((hotspot, index) => (
@@ -361,6 +509,8 @@ export class Overlay extends Component<Props, State> {
                         }
                         onMouseDown={ev => this.startMove(ev, index)}
                         onClickLine={this.onClickLine}
+                        onClosePolygon={this.save}
+                        incomplete={this.props.drawingTool === "polygon"}
                     />
                 ))}
             </svg>

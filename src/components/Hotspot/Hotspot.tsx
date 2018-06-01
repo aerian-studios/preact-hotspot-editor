@@ -13,6 +13,7 @@ interface Props {
     onVertexMouseDown: CornerHandler;
     onClickLine: (ev: MouseEvent, segment: number) => void;
     incomplete?: boolean;
+    onClosePolygon?: MouseHandler;
 }
 
 type MouseHandler = (ev: MouseEvent) => void;
@@ -23,7 +24,8 @@ const makeHandle = (
     point: Point,
     index: number,
     onVertexMouseDown: CornerHandler,
-    highlight = false
+    highlight = false,
+    onClosePolygon?: MouseHandler
 ) => {
     return (
         <rect
@@ -35,6 +37,7 @@ const makeHandle = (
             stroke-width={highlight ? 4 : 2}
             stroke="black"
             fill="white"
+            onClick={onClosePolygon}
             onMouseDown={ev => onVertexMouseDown(ev, index)}
         />
     );
@@ -43,7 +46,8 @@ const makeHandle = (
 const getHandles = (
     hotspot: HotspotShape,
     onHandleMouseDown: CornerHandler,
-    incomplete = false
+    incomplete = false,
+    onClosePolygon?: MouseHandler
 ) => {
     switch (hotspot.type) {
         case "ellipse":
@@ -75,7 +79,8 @@ const getHandles = (
                     point,
                     index,
                     onHandleMouseDown,
-                    incomplete && index === hotspot.points.length - 1
+                    incomplete && index === hotspot.points.length - 1,
+                    incomplete && index === 0 ? onClosePolygon : undefined
                 )
             );
 
@@ -114,7 +119,16 @@ const getLine = (
             index === hotspot.points.length - 1
                 ? hotspot.points[0]
                 : hotspot.points[index + 1];
-        return (
+        return [
+            <line
+                x1={point[0]}
+                y1={point[1]}
+                x2={next[0]}
+                y2={next[1]}
+                stroke-width={2}
+                stroke="black"
+                fill="none"
+            />,
             <line
                 className={styles.line}
                 x1={point[0]}
@@ -122,18 +136,19 @@ const getLine = (
                 x2={next[0]}
                 y2={next[1]}
                 onClick={ev => onClickLine(ev, index)}
-                stroke-width={4}
-                stroke="black"
+                stroke-width={6}
+                stroke="transparent"
                 fill="none"
             />
-        );
+        ];
     });
 
 const getShape = (
     hotspot: HotspotShape,
     colour: string,
     onMouseDown: MouseHandler,
-    onClick: MouseHandler
+    onClick: MouseHandler,
+    selected: boolean
 ) => {
     switch (hotspot.type) {
         case "ellipse":
@@ -145,6 +160,8 @@ const getShape = (
                     onMouseDown={onMouseDown}
                     onClick={onClick}
                     draggable={false}
+                    stroke-width={selected ? 2 : 0}
+                    stroke={selected ? "black" : "none"}
                 />
             );
 
@@ -169,6 +186,8 @@ const getShape = (
                     onMouseDown={onMouseDown}
                     onClick={onClick}
                     draggable={false}
+                    stroke-width={selected ? 2 : 0}
+                    stroke={selected ? "black" : "none"}
                 />
             );
     }
@@ -182,16 +201,23 @@ export const Hotspot: FunctionalComponent<Props> = ({
     onClick,
     onVertexMouseDown,
     onClickLine,
-    incomplete = false
+    incomplete = false,
+    onClosePolygon
 }) => {
     return (
         <svg draggable={false}>
             {[
-                getShape(hotspot, colour, onMouseDown, onClick),
+                getShape(hotspot, colour, onMouseDown, onClick, !!selected),
                 selected &&
                     isPolygon(hotspot) &&
                     getLine(hotspot, onClickLine, incomplete),
-                selected && getHandles(hotspot, onVertexMouseDown, incomplete)
+                selected &&
+                    getHandles(
+                        hotspot,
+                        onVertexMouseDown,
+                        incomplete,
+                        onClosePolygon
+                    )
             ]}
         </svg>
     );
