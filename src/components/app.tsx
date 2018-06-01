@@ -4,7 +4,7 @@ import { Toolbar } from "./Toolbar";
 
 import { HotspotShape, HotspotType } from "../types";
 import * as styles from "./App.scss";
-import hotspots from "./fixtures/shapes.json";
+import sampleHotspots from "./fixtures/shapes.json";
 import { HotspotCanvas } from "./HotspotCanvas";
 import { ToolButton } from "./ToolButton";
 
@@ -16,6 +16,7 @@ if ((module as any).hot) {
 interface State {
     selectedIndex?: number;
     hotspots?: HotspotShape[];
+    selectedHotspot?: number;
 }
 
 const INITIAL_STATE: State = {
@@ -29,12 +30,25 @@ export default class App extends Component {
     public currentUrl?: string;
 
     public componentDidMount() {
-        this.setState({ hotspots });
+        this.setState({ hotspots: sampleHotspots });
     }
 
-    public saveHotspots = (hs: HotspotShape[]) => {
+    public deleteHotspot = () => {
+        if (typeof this.state.selectedHotspot === "undefined") {
+            return;
+        }
+        const hotspots = [...this.state.hotspots];
+        hotspots.splice(this.state.selectedHotspot, 1);
+        this.setState({ hotspots, selectedHotspot: undefined });
+    };
+
+    public saveHotspots = (hs: HotspotShape[], selectedHotspot: number) => {
         console.log("save", hs);
-        this.setState({ selectedIndex: undefined, hotspots: hs });
+        this.setState({
+            selectedIndex: undefined,
+            hotspots: hs,
+            selectedHotspot
+        });
     };
     public render() {
         return (
@@ -47,13 +61,14 @@ export default class App extends Component {
                             this.setState({ selectedIndex })
                         }
                     />
-                    {typeof this.state.selectedIndex === "undefined" && (
-                        <ToolButton
-                            label="Delete"
-                            onPress={() => {}}
-                            selected={false}
-                        />
-                    )}
+                    {typeof this.state.selectedIndex === "undefined" &&
+                        typeof this.state.selectedHotspot !== "undefined" && (
+                            <ToolButton
+                                label="Delete"
+                                onPress={this.deleteHotspot}
+                                selected={false}
+                            />
+                        )}
                 </div>
                 <HotspotCanvas
                     image={"./assets/complications.png"}
@@ -65,7 +80,7 @@ export default class App extends Component {
                             : undefined
                     }
                     hotspots={this.state.hotspots}
-                    stopEditing={this.saveHotspots}
+                    saveHotspots={this.saveHotspots}
                 />
             </div>
         );

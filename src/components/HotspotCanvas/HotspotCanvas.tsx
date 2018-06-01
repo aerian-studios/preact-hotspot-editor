@@ -19,7 +19,7 @@ interface Props {
     height: number;
     hotspots: HotspotShape[];
     drawingTool?: HotspotType;
-    stopEditing?: (hotspots: HotspotShape[]) => void;
+    saveHotspots?: (hotspots: HotspotShape[], selectedHotspot?: number) => void;
     image?: string;
 }
 
@@ -315,17 +315,19 @@ export class HotspotCanvas extends Component<Props, State> {
     };
 
     public save = () => {
-        if (this.props.stopEditing) {
-            this.props.stopEditing(this.state.hotspots);
+        if (!this.props.saveHotspots) {
+            return;
         }
+        this.props.saveHotspots(this.state.hotspots, this.state.currentHotspot);
     };
 
     public restoreClickHandler = () => {
-        if (this.props.drawingTool === "polygon") {
-            window.setTimeout(() => {
-                this.setState({ onClick: this.addPolygonPoint });
-            }, 500);
+        if (this.props.drawingTool !== "polygon") {
+            return;
         }
+        window.setTimeout(() => {
+            this.setState({ onClick: this.addPolygonPoint });
+        }, 500);
     };
     public startMove = (ev: MouseEvent, currentHotspot: number) => {
         ev.preventDefault();
