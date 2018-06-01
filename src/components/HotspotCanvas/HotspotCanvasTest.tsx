@@ -7,6 +7,6 @@ import { HotspotCanvas } from "./index";
 
 describe("HotspotCanvas", () =>
     it("renders correctly", () => {
-        // const tree = render(<HotspotCanvas />);
+        // const tree = render(<Overlay />);
         // expect(tree).toMatchSnapshot();
     }));
