@@ -1,0 +1,1 @@
+export { HotspotEditor } from "./HotspotEditor";
