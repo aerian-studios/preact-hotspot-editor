@@ -48,8 +48,9 @@ export class HotspotEditor extends Component<Props, State> {
         this.props.saveHotspots(hs, selectedHotspot);
     };
     public render() {
+        const { style, saveHotspots, ...props } = this.props;
         return (
-            <div className={styles.app}>
+            <div className={styles.app} style={style}>
                 <div className={styles.sidebar}>
                     <Toolbar
                         labels={["Circle", "Square", "Polygon"]}
@@ -68,15 +69,12 @@ export class HotspotEditor extends Component<Props, State> {
                         )}
                 </div>
                 <HotspotCanvas
-                    image={"./assets/complications.png"}
-                    width={778}
-                    height={780}
+                    {...props}
                     drawingTool={
                         typeof this.state.selectedIndex !== "undefined"
                             ? tools[this.state.selectedIndex]
                             : undefined
                     }
-                    hotspots={this.props.hotspots}
                     saveHotspots={this.saveHotspots}
                 />
             </div>

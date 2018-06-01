@@ -271,7 +271,7 @@ export class HotspotCanvas extends Component<Props, State> {
         if (typeof this.state.currentHotspot === "undefined") {
             return;
         }
-        const hotspots = Array.from(this.state.hotspots);
+        const hotspots = [...this.state.hotspots];
         hotspots.splice(this.state.currentHotspot, 1);
         hotspots.push(this.moveHotspot(ev.clientX, ev.clientY));
         this.setState({
@@ -287,7 +287,7 @@ export class HotspotCanvas extends Component<Props, State> {
         ) {
             return;
         }
-        const hotspots = Array.from(this.state.hotspots);
+        const hotspots = [...this.state.hotspots];
         hotspots.splice(
             this.state.currentHotspot,
             1,
@@ -466,7 +466,7 @@ export class HotspotCanvas extends Component<Props, State> {
             return;
         }
 
-        const hotspots = Array.from(this.state.hotspots);
+        const hotspots = [...this.state.hotspots];
         const currentHotspot = hotspots[this.state.currentHotspot];
         if (!isPolygon(currentHotspot)) {
             return;
