@@ -94,8 +94,8 @@ var hotspots = [
 <script defer src="bundle.js"></script>
 ```
 
-For examples, see [the editor](assets/editor.html) and
-[the viewer](assets/viewer.html).
+For examples, see [the editor](src/assets/editor.html) and
+[the viewer](src/assets/viewer.html).
 
 ### Credits
 
