@@ -17,7 +17,17 @@ export default function(config, env, helpers) {
             silent: true
         });
     });
+    // console.log(config);
+
+    helpers
+        .getPluginsByName(config, "ExtractTextPlugin")
+        .forEach(({ plugin }) => {
+            // console.log(plugin);
+            plugin.options.disable = true;
+        });
+
     config.output.libraryTarget = "umd";
+    config.output.filename = "[name].js";
 
     config.module.loaders.push({
         test: /\.tsx?$/,

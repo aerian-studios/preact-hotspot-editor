@@ -69,20 +69,20 @@
                     }
                 }
 
-                window.HotspotViewerData = {
-                    image: "./assets/complications.png",
-                    width: 778,
-                    height: 780,
-                    hotspots: hotspots,
-                    selector: "#viewer",
-                    onClick: function (hotspot) {
-                        alert(hotspot.text);
-                    }
-                }
+                // window.HotspotViewerData = {
+                //     image: "./assets/complications.png",
+                //     width: 778,
+                //     height: 780,
+                //     hotspots: hotspots,
+                //     selector: "#viewer",
+                //     onClick: function (hotspot) {
+                //         alert(hotspot.text);
+                //     }
+                // }
 
             </script>
             <div id="editor"></div>
-            <div id="viewer"></div>
+            <!-- <div id="viewer"></div> -->
             <script defer src="<%= htmlWebpackPlugin.files.chunks['bundle'].entry %>"></script>
             <script>window.fetch || document.write('<script src="<%= htmlWebpackPlugin.files.chunks["polyfills"].entry %>"><\/script>')</script>
 </body>
