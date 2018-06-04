@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "preact build",
-    "serve": "preact build && preact serve",
-    "dev": "preact watch",
+    "build": "preact build --template src/index.html --no-prerender",
+    "serve": "preact build --template src/index.html --no-prerender && preact serve",
+    "dev": "preact watch --template src/index.html",
     "lint": "tslint --project src",
     "test": "jest ./tests",
     "precommit": "lint-staged"

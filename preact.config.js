@@ -17,6 +17,7 @@ export default function(config, env, helpers) {
             silent: true
         });
     });
+    config.output.libraryTarget = "umd";
 
     config.module.loaders.push({
         test: /\.tsx?$/,

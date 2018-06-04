@@ -1,8 +1,8 @@
-import { h, FunctionalComponent } from "preact";
+import { FunctionalComponent, h } from "preact";
 
-import * as styles from "./Hotspot.scss";
-import { HotspotShape, Point, isPolygon, PolygonHotspot } from "../../types";
+import { HotspotShape, isPolygon, Point, PolygonHotspot } from "../../types";
 import hotspots from "../fixtures/shapes.json";
+import * as styles from "./Hotspot.scss";
 
 interface Props {
     hotspot: HotspotShape;
@@ -121,6 +121,7 @@ const getLine = (
                 : hotspot.points[index + 1];
         return [
             <line
+                key="mark"
                 x1={point[0]}
                 y1={point[1]}
                 x2={next[0]}
@@ -130,6 +131,7 @@ const getLine = (
                 fill="none"
             />,
             <line
+                key="hit"
                 className={styles.line}
                 x1={point[0]}
                 y1={point[1]}

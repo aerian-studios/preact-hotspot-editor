@@ -9,6 +9,7 @@ export interface RectHotspot {
     y: number;
     width: number;
     height: number;
+    text?: string;
 }
 
 export interface EllipseHotspot {
@@ -17,11 +18,13 @@ export interface EllipseHotspot {
     cy: number;
     rx: number;
     ry: number;
+    text?: string;
 }
 
 export interface PolygonHotspot {
     type: "polygon";
     points: Point[];
+    text?: string;
 }
 
 export const isPolygon = (hotspot: HotspotShape): hotspot is PolygonHotspot =>

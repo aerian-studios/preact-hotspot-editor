@@ -4,17 +4,20 @@
         "x": 100,
         "y": 200,
         "width": 300,
-        "height": 150
+        "height": 150,
+        "text": "Rectangle"
     },
     {
         "type": "ellipse",
         "cx": 300,
         "cy": 300,
         "rx": 50,
-        "ry": 90
+        "ry": 90,
+        "text": "Ellipse"
     },
     {
         "type": "polygon",
-        "points": [[500, 600], [550, 525], [550, 575], [600, 500]]
+        "points": [[500, 600], [550, 525], [550, 575], [600, 500]],
+        "text": "You're a wizard, Harry"
     }
 ]

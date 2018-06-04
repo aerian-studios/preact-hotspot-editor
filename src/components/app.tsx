@@ -1,10 +1,12 @@
 import { Component, h } from "preact";
 
+import { isUndefined } from "util";
 import { HotspotShape, HotspotType } from "../types";
 import * as styles from "./App.scss";
 import sampleHotspots from "./fixtures/shapes.json";
 import { HotspotCanvas } from "./HotspotCanvas";
 import { HotspotEditor } from "./HotspotEditor";
+import { TextEditor } from "./TextEditor/TextEditor";
 import { ToolButton } from "./ToolButton";
 
 if ((module as any).hot) {
@@ -28,13 +30,12 @@ export default class App extends Component {
         this.setState({ hotspots: sampleHotspots });
     }
 
-    public saveHotspots = (
-        hotspots: HotspotShape[],
-        selectedHotspot?: number
-    ) => {
-        console.log("save", hotspots, selectedHotspot);
-        this.setState({ hotspots, selectedHotspot });
+    public save = (hotspots: HotspotShape[]) => {
+        console.log("faking save", hotspots);
+        this.setState({ hotspots });
+        return false;
     };
+
     public render() {
         return (
             <div id="app" className={styles.app}>
@@ -43,9 +44,11 @@ export default class App extends Component {
                     width={778}
                     height={780}
                     hotspots={this.state.hotspots}
-                    saveHotspots={this.saveHotspots}
+                    saveHotspots={this.save}
                 />
-                <textarea>{JSON.stringify(this.state.hotspots)}</textarea>
+                <p style={{ fontFamily: "monospace" }}>
+                    {JSON.stringify(this.state.hotspots)}
+                </p>
             </div>
         );
     }

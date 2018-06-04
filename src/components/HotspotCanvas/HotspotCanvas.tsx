@@ -43,8 +43,10 @@ export class HotspotCanvas extends Component<Props, State> {
     };
     public constructor(props: Props) {
         super(props);
+        this.componentWillReceiveProps(props);
     }
 
+    public preventDefault = (ev: Event) => ev.preventDefault();
     public getDerivedStateFromProps(
         props: Partial<Props>,
         state: State
@@ -56,7 +58,7 @@ export class HotspotCanvas extends Component<Props, State> {
                     ...state,
                     hotspots,
                     onClick: this.addPolygonPoint,
-                    mouseDown: undefined,
+                    mouseDown: this.preventDefault,
                     currentHotspot: undefined
                 };
 
@@ -64,7 +66,7 @@ export class HotspotCanvas extends Component<Props, State> {
                 return {
                     ...state,
                     hotspots,
-                    onClick: undefined,
+                    onClick: this.preventDefault,
                     mouseDown: this.startRect,
                     currentHotspot: undefined
                 };
@@ -73,7 +75,7 @@ export class HotspotCanvas extends Component<Props, State> {
                 return {
                     ...state,
                     hotspots,
-                    onClick: undefined,
+                    onClick: this.preventDefault,
                     mouseDown: this.startEllipse,
                     currentHotspot: undefined
                 };
@@ -82,8 +84,8 @@ export class HotspotCanvas extends Component<Props, State> {
                 return {
                     ...state,
                     hotspots,
-                    onClick: undefined,
-                    mouseDown: undefined
+                    onClick: this.preventDefault,
+                    mouseDown: this.preventDefault
                 };
         }
     }
