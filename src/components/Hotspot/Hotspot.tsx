@@ -121,7 +121,7 @@ const getLine = (
                 : hotspot.points[index + 1];
         return [
             <line
-                key="mark"
+                key={`line${index}`}
                 x1={point[0]}
                 y1={point[1]}
                 x2={next[0]}
@@ -131,7 +131,7 @@ const getLine = (
                 fill="none"
             />,
             <line
-                key="hit"
+                key={`hit${index}`}
                 className={styles.line}
                 x1={point[0]}
                 y1={point[1]}
