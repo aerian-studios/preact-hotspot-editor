@@ -1,35 +1,43 @@
 import { HotspotEditor } from "./components/HotspotEditor/index.ts";
+import { HotspotViewer } from "./components/HotspotViewer/index.ts";
 import { h, render } from "preact";
 
 const init = () => {
-    const config = window.HotspotEditorData;
+    const editorConfig = window.HotspotEditorData;
 
-    if (!config) {
-        console.error("HotspotEditor config not found");
+    if (editorConfig) {
+        const editorTarget = document.querySelector(editorConfig.selector);
 
-        return;
+        if (!editorTarget) {
+            console.error(
+                "Target element not found. Please check config 'selector' value"
+            );
+
+            return;
+        }
+        render(h(HotspotEditor, editorConfig), editorTarget);
     }
 
-    const target = document.querySelector(config.selector);
+    const displayConfig = window.HotspotViewerData;
 
-    if (!target) {
-        console.error(
-            "Target element not found. Please check config 'selector' value"
-        );
+    if (displayConfig) {
+        const displayTarget = document.querySelector(displayConfig.selector);
 
-        return;
+        if (!displayTarget) {
+            console.error(
+                "Target element not found. Please check config 'selector' value"
+            );
+
+            return;
+        }
+        render(h(HotspotViewer, displayConfig), displayTarget);
     }
-    console.log(config);
-    render(h(HotspotEditor, config), target);
 };
 
 // in development, set up HMR:
 if (module.hot) {
     // eslint-disable-next-line
     require("preact/devtools"); // enables React DevTools, be careful on IE
-    // module.hot.accept("./components/HotspotEditor/index.ts", () =>
-    //     requestAnimationFrame(init)
-    // );
 }
 
 init();

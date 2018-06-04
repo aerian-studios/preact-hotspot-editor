@@ -1,7 +1,6 @@
 import { Component, h } from "preact";
 
-import { isUndefined } from "util";
-import { HotspotShape, HotspotType } from "../../types";
+import { HotspotShape, HotspotType, isUndefined } from "../../types";
 import { HotspotCanvas } from "../HotspotCanvas";
 import { TextEditor } from "../TextEditor/";
 import { Toolbar } from "../Toolbar";

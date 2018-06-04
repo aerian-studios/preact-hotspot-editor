@@ -33,3 +33,7 @@ export const isRect = (hotspot: HotspotShape): hotspot is RectHotspot =>
     hotspot.type === "rect";
 export const isEllipse = (hotspot: HotspotShape): hotspot is EllipseHotspot =>
     hotspot.type === "ellipse";
+
+export const isUndefined = (value: any): value is undefined => {
+    return typeof value === "undefined";
+};

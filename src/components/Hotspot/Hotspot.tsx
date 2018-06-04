@@ -8,10 +8,10 @@ interface Props {
     hotspot: HotspotShape;
     colour?: string;
     selected?: boolean;
-    onMouseDown: MouseHandler;
+    onMouseDown?: MouseHandler;
     onClick: MouseHandler;
-    onVertexMouseDown: CornerHandler;
-    onClickLine: (ev: MouseEvent, segment: number) => void;
+    onVertexMouseDown?: CornerHandler;
+    onClickLine?: (ev: MouseEvent, segment: number) => void;
     incomplete?: boolean;
     onClosePolygon?: MouseHandler;
 }
@@ -156,7 +156,7 @@ const getShape = (
         case "ellipse":
             return (
                 <ellipse
-                    class={styles.shape}
+                    class={onMouseDown ? styles.shape : styles.shapeView}
                     {...hotspot}
                     fill={colour}
                     onMouseDown={onMouseDown}
@@ -170,7 +170,7 @@ const getShape = (
         case "polygon":
             return (
                 <polygon
-                    class={styles.shape}
+                    class={onMouseDown ? styles.shape : styles.shapeView}
                     points={hotspot.points.join()}
                     fill={colour}
                     onMouseDown={onMouseDown}
@@ -183,7 +183,7 @@ const getShape = (
             return (
                 <rect
                     {...hotspot}
-                    class={styles.shape}
+                    class={onMouseDown ? styles.shape : styles.shapeView}
                     fill={colour}
                     onMouseDown={onMouseDown}
                     onClick={onClick}
