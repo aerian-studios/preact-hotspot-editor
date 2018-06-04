@@ -15,7 +15,7 @@ const init = () => {
 
             return;
         }
-        render(h(HotspotEditor, editorConfig), editorTarget);
+        render(h(HotspotEditor, editorConfig), document.body, editorTarget);
     }
 
     const displayConfig = window.HotspotViewerData;
@@ -30,7 +30,7 @@ const init = () => {
 
             return;
         }
-        render(h(HotspotViewer, displayConfig), displayTarget);
+        render(h(HotspotViewer, displayConfig), document.body, displayTarget);
     }
 };
 
