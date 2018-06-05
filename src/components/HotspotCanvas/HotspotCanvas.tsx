@@ -514,7 +514,7 @@ export class HotspotCanvas extends Component<Props, State> {
                     <Hotspot
                         key={index}
                         hotspot={hotspot}
-                        colour={ColourList[index % 10]}
+                        colour={ColourList[index % 3]}
                         selected={this.state.currentHotspot === index}
                         onClick={() => this.setState({ currentHotspot: index })}
                         onVertexMouseDown={(ev, vertex) =>

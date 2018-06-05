@@ -1,0 +1,104 @@
+@import "variables";
+.canvas {
+    font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+
+    .overlay {
+        flex: 1;
+        background-color: rgba(255, 255, 255, 0.8);
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 2000;
+    }
+
+    .modal {
+        text-align: center;
+        color: #333;
+
+        letter-spacing: 0.03em;
+        border: 3px solid #009de0;
+        background-color: #d9f1fb;
+        border-radius: 10px;
+        position: absolute;
+        z-index: 20000;
+        width: calc(100vw - 40px);
+        // height: 50vh;
+        left: 10px;
+        // top: 20vh;
+
+        @media (min-width: 768px) {
+            width: 50vw;
+            left: 25vw;
+            top: 20vh;
+            padding: 7vh 0 10vh 0;
+        }
+
+        p {
+            color: $c-brand-2ndary;
+            font-size: $t-h4;
+            padding: 0 8%;
+            margin: 0;
+            @media (min-width: 768px) {
+                font-size: $t2-h4;
+                padding: 0 15%;
+            }
+        }
+        h2 {
+            color: $c-brand-2ndary;
+            font-size: $t-h2;
+            font-weight: 600;
+            padding: 0 8%;
+            @media (min-width: 768px) {
+                font-size: $t2-h2;
+                padding: 0;
+            }
+        }
+
+        a:link,
+        a:visited {
+            margin: 2em;
+            position: relative;
+            display: inline-block;
+            padding: 13px 20px;
+            font-size: inherit;
+            font-weight: inherit;
+            line-height: 1;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.2s ease-out 0s;
+
+            background-color: #11296b;
+            color: #fff;
+            border: 2px solid #11296b;
+
+            text-decoration: none;
+            &:hover {
+                color: #fff;
+                background-color: #009de0;
+                border: 2px solid #009de0;
+
+                border-bottom: 2px solid #11296b;
+            }
+        }
+
+        .closebutton {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            cursor: pointer;
+            z-index: 1001;
+            display: block;
+            background-color: #009de0;
+            color: $c-brand-5inary;
+            border-radius: 50%;
+            width: 19px;
+            height: 19px;
+            padding: 0;
+            line-height: 15px;
+        }
+    }
+}

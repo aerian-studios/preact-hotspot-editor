@@ -1,0 +1,1489 @@
+// Manage your preferences form
+.reading-list {
+    legend {
+        width: 36px;
+        height: 36px;
+        float: left;
+        border: 1px solid $blue-lightest;
+        border-radius: 100%;
+        text-align: left;
+        padding: 4px;
+        margin: -4px 15px 0 $s-5;
+    }
+    //question number align number center
+    .diabetes-and-me-question-fieldset {
+        legend {
+            text-align: center;
+        }
+    }
+    // checkbox
+    .js-form-type-checkbox {
+        @media (min-width: 768px) {
+            width: auto;
+            min-width: calc(25% - 20px);
+        }
+    }
+    //postcode
+    .postcode-lookup-fieldset {
+        .fieldset-wrapper {
+            margin-left: $s-1;
+        }
+
+        .search-region-container {
+            max-width: 470px;
+            position: relative;
+        }
+
+        .js-form-type-textfield {
+            border: none;
+            margin: 0;
+
+            input {
+                border: 2px solid $c-brand-main;
+                border-radius: $border-radius;
+            }
+        }
+        .form-text {
+            height: 48px;
+            border: 0;
+            margin: 0;
+            outline: none;
+        }
+        .js-diabetes-and-me-postcode {
+            position: absolute;
+            top: 0px;
+            right: 0;
+            text-indent: 5px;
+            padding: 0;
+
+            .button {
+                height: 48px;
+                border-radius: 0 $border-radius $border-radius 0;
+                border: 0;
+                color: $whiteish;
+                background-color: $blue-light;
+                background-image: url("../img/search-white.svg");
+                background-repeat: no-repeat;
+                background-position: 87%;
+                background-size: 20%;
+                padding: 1px 35px 0 15px;
+                outline: none;
+            }
+        }
+        .success,
+        .error {
+            font-size: $t2-form;
+        }
+
+        .success:before,
+        .error:before {
+            font-family: fontawesome;
+            font-size: 23px;
+            z-index: 2;
+            padding: 0 7px 0 0;
+            display: inline-block;
+            margin: 7px 0 0 0;
+            position: relative;
+            top: 2px;
+        }
+
+        .error:before {
+            color: $red;
+            content: "\f06a";
+        }
+        .success:before {
+            color: $green;
+            content: "\f058";
+        }
+    }
+
+    .dam-update-profile {
+        float: right;
+    }
+}
+
+.signup-widget {
+    .actions-container {
+        text-align: right;
+        padding-top: $s-2;
+        padding-bottom: $s-2;
+    }
+    legend {
+        margin-left: $s-1;
+    }
+    .diabetes-and-me-question-fieldset {
+        margin-top: 0;
+    }
+    .skip-question {
+        .tooltip {
+            float: none;
+            .skip-info {
+                top: 23px;
+            }
+        }
+    }
+}
+
+// PROTOTYPE
+.reading-list-container {
+    .js-form-type-radio,
+    .js-form-type-checkbox {
+        label {
+            display: inline-block;
+        }
+        @media (min-width: 768px) {
+            float: left;
+            width: 33%;
+            padding-right: 10px;
+        }
+    }
+
+    .reading-list-results-container {
+        padding: 30px 0;
+        .box {
+            display: inline-block;
+            margin-right: $s-2;
+            padding: 0;
+            a {
+                padding: $s-3 $s-2;
+                display: block;
+            }
+        }
+    }
+}
+
+// REAL ONE
+.diabetes-and-me-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 2000;
+
+    form.reading-list {
+        width: 100%;
+        overflow: hidden;
+        height: 100%;
+    }
+    .diabetes-and-me-questions-container,
+    .diabetes-and-me-closing-info {
+        margin: 0;
+        width: 100%;
+        height: 85%;
+        overflow: auto;
+        @media (min-width: 768px) {
+            height: 80%;
+        }
+    }
+    .actions-container {
+        height: 15%;
+        background-color: $whiteish;
+        position: relative;
+        @media (min-width: 768px) {
+            height: 20%;
+        }
+        .button {
+            position: absolute;
+            width: auto;
+            top: 50%;
+            right: $s-1;
+            transform: translateY(-50%);
+            padding: $s-1/2 $s-1;
+            @media (min-width: 768px) {
+                right: 30px;
+                padding: 13px $s-2;
+                width: 30%;
+            }
+        }
+        .go-back-link {
+            display: none;
+            position: absolute;
+            top: 80%;
+            left: $s-1;
+            transform: translateY(-50%);
+            font-size: 14px;
+            border-bottom: 1px solid $c-brand-main;
+            color: $c-brand-main;
+            cursor: pointer;
+            @media (min-width: 768px) {
+                left: 30px;
+                font-size: 18px;
+                top: 50%;
+            }
+        }
+        .skip-question-container {
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            @media (min-width: 768px) {
+                right: calc(30% + 55px);
+                left: inherit;
+            }
+            .js-form-type-checkbox {
+                border: none;
+                width: auto;
+                margin: 0;
+
+                @media (min-width: 768px) {
+                    width: 190px;
+                }
+
+                label {
+                    text-align: right;
+                    padding: 8px 5px 0 34px;
+                    font-size: $t-h5;
+                    @media (min-width: 768px) {
+                        padding: 8px 5px 5px 5px;
+                        font-size: $t1-base;
+                    }
+                }
+                &.active {
+                    label {
+                        color: $c-brand-main;
+                        &:before {
+                            background-color: $c-brand-main;
+                            border-color: $c-brand-main;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .diabetes-and-me-question-fieldset {
+        padding: $s-2 $s-1 0;
+        position: relative;
+        display: none;
+
+        @media (min-width: 768px) {
+            padding: 0 $s-2;
+        }
+
+        @media (min-width: 880px) {
+            width: 80%;
+            float: right;
+            padding: 99px 0 0;
+        }
+        legend {
+            background-color: $whiteish;
+            width: 126px;
+            height: 126px;
+            text-align: center;
+            border: 8px solid $c-brand-main;
+            border-radius: 50%;
+            color: $c-brand-3iary;
+            font-size: 60px;
+            font-weight: 600;
+            line-height: 98px;
+            float: left;
+            margin-top: $s-2;
+            display: none;
+            @media (min-width: 768px) {
+                display: block;
+            }
+
+            @media (min-width: 880px) {
+                position: absolute;
+                left: -21%;
+                top: 35px;
+                margin-top: 0;
+            }
+        }
+        .fieldset-wrapper {
+            clear: both;
+        }
+        .question-description {
+            font-weight: 600;
+            font-size: $t-h2;
+            color: $c-brand-2ndary;
+            padding-bottom: $s-2;
+            @media (min-width: 768px) {
+                font-size: $t1-h2;
+                padding-bottom: $s-6;
+            }
+            @media (min-width: 992px) {
+                font-size: $t2-h2;
+            }
+        }
+        .question-number {
+            display: block;
+            font-weight: 600;
+            font-size: $t-h4;
+            color: $c-brand-2ndary;
+            @media (min-width: 768px) {
+                font-size: $t1-h4;
+            }
+            @media (min-width: 992px) {
+                font-size: $t2-h4;
+            }
+            @media (min-width: 880px) {
+                position: absolute;
+                top: 71px;
+            }
+        }
+    }
+    .postcode-lookup-fieldset {
+        @media (min-width: 768px) {
+            .fieldset-wrapper {
+                padding-right: 84px;
+            }
+        }
+        .js-form-type-textfield {
+            width: calc(100% - 48px);
+            float: left;
+            height: 44px;
+            border: 2px solid $c-brand-main;
+            border-radius: $border-radius 0 0 $border-radius;
+            background: $whiteish;
+            input {
+                background: transparent;
+                height: 100%;
+                border: none;
+                box-shadow: none;
+                border-radius: $border-radius 0 0 $border-radius;
+            }
+        }
+        .js-diabetes-and-me-postcode {
+            width: 48px;
+            border-radius: 0 $border-radius $border-radius 0;
+            padding: 0;
+            height: 44px;
+            background-color: $c-brand-main;
+            margin-left: -2px;
+            position: relative;
+            float: left;
+
+            &:before {
+                @include font-icon("\f002", $whiteish, $t-h2);
+                text-align: center;
+                color: $whiteish;
+                background-color: $c-brand-main;
+                border-color: $c-input-check;
+                line-height: 40px;
+                display: block;
+                height: 100%;
+                border-radius: 0 $border-radius $border-radius 0;
+            }
+            input {
+                position: absolute;
+                left: 0;
+                top: 0;
+                background: transparent;
+                border: none;
+                width: 100%;
+                height: 100%;
+            }
+            .ajax-progress {
+                display: none;
+            }
+        }
+    }
+    .diabetes-and-me-close-button,
+    .diabetes-and-me-close-button-final,
+    .diabetes-and-me-close-button-start {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        cursor: pointer;
+        z-index: 1001;
+        &:before {
+            @include font-icon("\f057", $c-brand-main, $t-h2);
+            background-color: $c-brand-5inary;
+            border-radius: 50%;
+        }
+    }
+    .question-description {
+        display: block;
+    }
+    .js-form-type-radio,
+    .js-form-type-checkbox {
+        background-color: $whiteish;
+        border: 2px solid $c-brand-main;
+        border-radius: $border-radius;
+        padding: 0;
+        margin-bottom: $s-1;
+        color: $c-brand-main;
+        width: 100%;
+        min-height: 38px;
+        float: left;
+        @media (min-width: 768px) {
+            min-height: 48px;
+        }
+
+        @media (min-width: 880px) {
+            margin: 0 ($s-3 - 4) $s-1 0;
+            width: calc(50% - 26px);
+        }
+        input {
+            display: none;
+        }
+        label {
+            cursor: pointer;
+            display: block;
+            text-align: center;
+            padding: 6px 5px;
+            margin: 0;
+            font-size: 14px;
+            @media (min-width: 768px) {
+                padding: 10px;
+                font-size: $t1-base;
+            }
+        }
+        .ajax-progress {
+            display: none;
+        }
+        &.active {
+            border: 2px solid $c-input-check;
+            color: $c-input-check;
+        }
+    }
+    .js-form-type-checkbox {
+        position: relative;
+        &.active {
+            label {
+                &:before {
+                    @include font-icon("\f00c", $whiteish, $t-base);
+                    text-align: center;
+                    line-height: 15px;
+                    background-color: $c-input-check;
+                    color: $whiteish;
+                    border-color: $c-input-check;
+                }
+                @media (min-width: 768px) {
+                    &:before {
+                        line-height: 26px;
+                        @include font-icon("\f00c", $whiteish, $t-h2);
+                    }
+                }
+            }
+        }
+        label {
+            &:before {
+                content: "";
+                height: 20px;
+                width: 20px;
+                position: absolute;
+                left: 7px;
+                top: 7px;
+                border: 2px solid $c-brand-5inary;
+                border-radius: 5px;
+            }
+            @media (min-width: 768px) {
+                &:before {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+    }
+    .js-form-type-select {
+        select::-ms-expand {
+            display: none;
+        }
+        select {
+            display: block;
+            height: 48px;
+            width: 100%;
+            border: 2px solid $c-brand-main;
+            background-color: white;
+            background-image: url("../img/drop-down-caret.png");
+            background-repeat: no-repeat;
+            background-position: right -1px;
+
+            appearance: none;
+            padding-left: 12px;
+            @media (min-width: 768px) {
+                width: 80%;
+            }
+        }
+    }
+    .diabetes-and-me-closing-window {
+        display: none;
+        width: 80%;
+        border: 3px solid $c-brand-main;
+        background-color: $c-brand-5inary;
+        border-radius: $border-radius;
+        height: 60vh;
+        overflow: hidden;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+
+        @media (min-width: 768px) {
+            width: 65%;
+            height: 50vh;
+        }
+
+        .diabetes-and-me-closing-info {
+            padding: 15% 10% 0;
+            text-align: center;
+            height: 80%;
+            p {
+                color: $c-brand-2ndary;
+                font-size: $t-h3;
+                font-weight: 600;
+            }
+            @media (min-width: 768px) {
+                padding: 20% 10% 0;
+                p {
+                    font-size: $t2-h3;
+                }
+            }
+        }
+        .actions-container {
+            height: 20%;
+            a {
+                width: 46%;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 14px;
+                @media (min-width: 768px) {
+                    font-size: $t1-base;
+                }
+            }
+            .js-remove-diabetes-and-me {
+                left: 2%;
+            }
+            .js-keep-diabetes-and-me {
+                right: 2%;
+            }
+        }
+    }
+}
+.diabetes-and-me-final-window {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    -webkit-transform: translateY(-50%) translateX(-15%);
+    -ms-transform: translateY(-50%) translateX(-15%);
+    transform: translateY(-50%);
+    width: 100%;
+    text-align: center;
+    h2,
+    h3 {
+        color: $c-brand-2ndary;
+        font-size: $t2-h2;
+        font-weight: 600;
+    }
+    img {
+        margin-bottom: 30px;
+    }
+}
+.diabetes-and-me-start-window {
+    width: 90%;
+    border: 3px solid #009de0;
+    background-color: #d9f1fb;
+    border-radius: 10px;
+    height: 85vh;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+
+    @media (min-width: 768px) {
+        width: 75%;
+        height: 65vh;
+    }
+
+    .diabetes-and-me-start-info {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        -webkit-transform: translateY(-50%) translateX(-15%);
+        -ms-transform: translateY(-50%) translateX(-15%);
+        transform: translateY(-50%);
+        width: 100%;
+        text-align: center;
+    }
+    p {
+        color: $c-brand-2ndary;
+        font-size: $t-h4;
+        padding: 0 8%;
+        margin: 0;
+        @media (min-width: 768px) {
+            font-size: $t2-h4;
+            padding: 0 15%;
+        }
+    }
+    h2 {
+        color: $c-brand-2ndary;
+        font-size: $t-h2;
+        font-weight: 600;
+        padding: 0 8%;
+        @media (min-width: 768px) {
+            font-size: $t2-h2;
+            padding: 0;
+        }
+    }
+    img {
+        display: none;
+        @media (min-width: 768px) {
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+    }
+    .lets-get-started {
+        display: block;
+        width: 224px;
+        margin: 45px auto;
+        cursor: pointer;
+    }
+    .diabetes-and-me-no-thanks-button {
+        display: inline-block;
+        border-bottom: 1px solid $c-brand-main;
+        color: $c-brand-main;
+        cursor: pointer;
+    }
+}
+#diabetes-and-me-form {
+    width: 90%;
+    border: 3px solid $c-brand-main;
+    background-color: $c-brand-5inary;
+    border-radius: $border-radius;
+    height: 85vh;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+
+    @media (min-width: 768px) {
+        width: 75%;
+        height: 65vh;
+    }
+}
+
+.card-container {
+    position: relative;
+    min-height: 330px;
+    margin-bottom: $s-2;
+    &.flipped {
+        .card-front {
+            transform: rotateY(-180deg);
+        }
+        .card-back {
+            transform: rotateY(0);
+        }
+    }
+}
+
+.card-front {
+    figure.hasVideo {
+        position: relative;
+        &::before {
+            @include font-icon("\f04b", $whiteish, 40px);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            height: 61px;
+            width: 103px;
+            border-radius: $border-radius / 2;
+            z-index: 2;
+            text-align: center;
+            padding-top: $s-2;
+        }
+    }
+}
+
+.card-front,
+.card-back {
+    backface-visibility: hidden;
+    transition: transform 0.3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding-bottom: 45px;
+    .actions {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-top: 1px dashed $c-brand-2ndary;
+        height: 45px;
+        border-radius: 0 0 $border-radius $border-radius;
+        background-color: $whiteish;
+    }
+    .options-icon,
+    .cancel-icon {
+        float: right;
+        border-left: 1px dashed $c-brand-2ndary;
+        height: 45px;
+        padding: $s-1;
+        background-color: $c-brand-5inary;
+        font-size: $t-small;
+        color: $c-brand-2ndary;
+        cursor: pointer;
+        &:before {
+            @include font-icon("\f040", $c-brand-2ndary, $t-small);
+            margin-right: $s-1 - 4;
+        }
+    }
+    .cancel-icon {
+        &:before {
+            @include font-icon("\f00d", $c-brand-2ndary, $t-small);
+        }
+    }
+    .options-icon,
+    .read-icon,
+    .save-icon,
+    .bin-icon {
+        span {
+            display: none;
+            position: absolute;
+            top: -65px;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background-color: $c-brand-5inary;
+            text-align: center;
+            padding-top: 20px;
+            border-bottom: 2px solid $c-brand-main;
+            border-top: 1px dashed $c-brand-2ndary;
+            font-size: $t-small;
+            font-weight: 600;
+            color: $c-brand-2ndary;
+            &:after,
+            &:before {
+                top: 100%;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+            }
+
+            &:after {
+                border-color: rgba(217, 241, 251, 0);
+                border-top-color: $c-brand-5inary;
+                border-width: 4px;
+                margin-left: -4px;
+            }
+            &:before {
+                border-color: rgba(0, 157, 224, 0);
+                border-top-color: $c-brand-main;
+                border-width: 7px;
+                margin-left: -7px;
+            }
+        }
+        &:hover {
+            span {
+                display: block;
+            }
+        }
+    }
+    .options-icon {
+        border-radius: 0 0 $border-radius 0;
+        span {
+            &:before,
+            &:after {
+                right: 48px;
+            }
+            &:after {
+                margin-left: 0;
+                margin-right: -4px;
+            }
+            &:before {
+                margin-left: 0;
+                margin-right: -7px;
+            }
+        }
+    }
+    .bin-icon,
+    .save-icon {
+        border-radius: 0 0 0 $border-radius;
+        span {
+            &:after,
+            &:before {
+                left: 23px;
+            }
+        }
+    }
+    .read-icon {
+        span {
+            &:after,
+            &:before {
+                left: 67px;
+            }
+        }
+    }
+    .read-icon,
+    .save-icon,
+    .bin-icon {
+        float: left;
+        width: 45px;
+        height: 45px;
+        text-align: center;
+        border: none;
+        border-radius: 0;
+        border-right: 1px dashed $c-brand-2ndary;
+        cursor: pointer;
+        span {
+            display: none;
+        }
+        &:hover {
+            span {
+                display: block;
+            }
+            background-color: $c-brand-5inary;
+        }
+    }
+    .read-icon,
+    .save-icon {
+        padding-top: 10px;
+        &:after {
+            content: "";
+            background: url("../img/sprite-bookmark.png") no-repeat center -25px;
+            width: 20px;
+            height: 25px;
+            display: block;
+            margin: 0 auto;
+        }
+        &.active {
+            &:after {
+                background-position-y: 0;
+            }
+        }
+    }
+    .read-icon {
+        &:after {
+            background: url("../img/sprite-read.png") no-repeat 0px -25px;
+            width: 22px;
+        }
+    }
+    .bin-icon {
+        padding: 10px 0 0 0;
+
+        &:before {
+            @include font-icon("\f014", $c-action-remove, 24px);
+        }
+
+        &:hover {
+            border: none;
+            border-radius: 0;
+            border-right: 1px dashed $c-brand-2ndary;
+        }
+    }
+    p {
+        font-size: 16px;
+    }
+}
+
+.card-back {
+    transform: rotateY(-180deg);
+    background-color: $c-brand-5inary;
+    text-align: center;
+
+    .actions {
+        border-top: 2px solid $c-brand-main;
+    }
+    h5 {
+        text-align: center;
+        padding: $s-3 $s-1 - 2 0;
+        color: $c-brand-main;
+    }
+    > span {
+        display: inline-block;
+        width: 40%;
+        text-align: center;
+
+        padding: $s-1 - 1 $s-2;
+        border: 2px solid $c-brand-main;
+        border-radius: 8px;
+        background-color: $whiteish;
+        color: $c-brand-2ndary;
+        margin: 0 5px;
+        cursor: pointer;
+        &:hover {
+            border: 2px solid $c-brand-main;
+        }
+    }
+}
+.card-confirm {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: none;
+    background-color: $c-brand-5inary;
+    h4 {
+        color: $c-brand-2ndary;
+        text-align: center;
+        padding: $s-3 $s-1 - 2 0;
+        color: $c-brand-main;
+    }
+    > span {
+        display: inline-block;
+        width: calc(100% - 50px);
+        text-align: center;
+        padding: $s-1 - 1 $s-2;
+        border: 2px solid $c-brand-main;
+        border-radius: 8px;
+        background-color: $whiteish;
+        color: $c-brand-2ndary;
+        margin: 0 25px;
+        cursor: pointer;
+        &:hover {
+            border: 2px solid $c-brand-main;
+        }
+        &.dislike-action {
+            margin-top: 10px;
+            color: #d0021b;
+
+            &:before {
+                @include font-icon("\f014", inherit, $t-h2);
+                float: left;
+            }
+        }
+    }
+}
+.card-faux {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    opacity: 0.5;
+    background-color: $c-brand-5inary;
+    h4 {
+        color: $c-brand-2ndary;
+    }
+}
+
+.dm-card-cta {
+    h4 {
+        color: $c-brand-2ndary;
+    }
+
+    .button {
+        padding: 13px 20px;
+        border: 2px;
+        margin: 0 7px;
+        display: block;
+    }
+}
+
+.block-diabetes-reading-list {
+    float: right;
+    margin-bottom: $s-2;
+}
+
+.save-for-later {
+    padding: 9px 35px 9px 10px;
+    border-color: $c-brand-main;
+    font-weight: 600;
+    position: relative;
+    cursor: pointer;
+    &:after {
+        content: "";
+        background: url("../img/sprite-bookmark-alt.png") no-repeat 0px -25px;
+        position: absolute;
+        top: -2px;
+        right: 6px;
+        width: 20px;
+        height: 25px;
+    }
+    &.active {
+        &:after {
+            background-position-y: 0;
+        }
+    }
+}
+
+.pre-footer {
+    .block-diabetes-reading-list {
+        margin-top: $s-3;
+        width: 100%;
+        @media (min-width: 480px) {
+            width: auto;
+        }
+    }
+}
+
+// Form filter
+.form-filter {
+    display: none;
+    border: solid 2px $blue-dark;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: $s-2;
+    padding: $s-2;
+    background: $blue-lightest;
+}
+.diabetes-and-me-form-filter {
+    position: relative;
+    padding-bottom: $s-6 * 2;
+    @media (min-width: 992px) {
+        padding-bottom: 50px;
+    }
+    .saved-read-container {
+        position: absolute;
+        bottom: -$s-1 * 2;
+        left: 0;
+        @media (min-width: 768px) {
+            bottom: 0;
+        }
+        .js-form-type-checkbox {
+            border: none;
+            padding: 0;
+            margin-bottom: $s-1;
+            color: $c-brand-2ndary;
+            position: relative;
+            float: left;
+            width: 100%;
+            margin: 0;
+            @media (min-width: 480px) {
+                width: 50%;
+            }
+            @media (min-width: 480px) {
+                &.form-item-show-read-items {
+                    border-left: 1px dashed $c-brand-2ndary;
+                }
+            }
+            @media (min-width: 768px) {
+                width: auto;
+                label {
+                    padding: $s-5 $s-6 0 $s-6;
+                }
+            }
+            input {
+                display: none;
+            }
+            label {
+                text-align: center;
+                cursor: pointer;
+                display: block;
+                text-align: left;
+                padding: 6px 35px;
+                margin: 0;
+                font-size: 14px;
+                &:before,
+                &:after {
+                    top: 7px;
+                    @media (min-width: 480px) {
+                        top: 12px;
+                        right: 12px;
+                    }
+                }
+                &:before {
+                    content: "";
+                    height: 20px;
+                    width: 20px;
+                    position: absolute;
+                    left: 7px;
+                    border: 2px solid $blue-light;
+                    border-radius: 0;
+                }
+                &:after {
+                    content: "";
+                    background: url("../img/sprite-bookmark.png") no-repeat
+                        center 0;
+                    width: 20px;
+                    height: 25px;
+                    position: absolute;
+                    right: 7px;
+                    left: auto;
+                }
+            }
+            &.active {
+                label {
+                    &:before {
+                        @include font-icon("\f00c", $whiteish, $t-base);
+                        line-height: 15px;
+                        background-color: $c-brand-main;
+                        color: $whiteish;
+                        border-color: $c-brand-main;
+                    }
+                }
+            }
+            &.form-item-show-read-items {
+                label {
+                    &:after {
+                        background: url("../img/sprite-read.png") no-repeat 0 0;
+                        width: 22px;
+                    }
+                }
+            }
+        }
+    }
+}
+.show-preferences {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    @media (min-width: 992px) {
+        display: block;
+    }
+    // dropdown
+    > span {
+        order: 2; // position item second, used only for tablet and below
+        position: relative;
+        display: block;
+        font-weight: 600;
+        border: 2px solid $c-brand-main;
+        border-radius: $border-radius $border-radius 0 0;
+        padding: $s-1;
+        color: $c-brand-main;
+        cursor: pointer;
+        background: $whiteish;
+        @media (min-width: 992px) {
+            float: right;
+            margin-left: 4px;
+            padding: 21px 50px $s-1 * 2 $s-1;
+        }
+
+        &:before {
+            content: "";
+            height: 2px;
+            position: absolute;
+            right: -2px;
+            left: -2px;
+            bottom: -2px;
+            background: $whiteish;
+            z-index: 3;
+            border-right: solid 2px $c-brand-main;
+            border-left: solid 2px $c-brand-main;
+        }
+        &:after {
+            @include font-icon("\f078", $c-brand-3iary, 14px);
+            position: absolute;
+            right: 20px;
+            top: 4px;
+            @media (min-width: 992px) {
+                top: 22px;
+            }
+        }
+
+        // open and close
+        &.open {
+            height: auto;
+            border-bottom: none;
+            &:after {
+                @include font-icon("\f077", $c-brand-3iary, 14px);
+            }
+            @media (min-width: 992px) {
+                height: 84px;
+            }
+        }
+        &.close {
+            border-bottom: 2px solid $c-brand-main;
+            border-radius: $border-radius;
+            &:before {
+                display: none;
+            }
+        }
+    }
+}
+.preferences {
+    order: 3; // position item third, used only for tablet and mobile
+    border: 2px solid $c-brand-main;
+    border-radius: 0 0 $border-radius $border-radius;
+    background: $whiteish;
+    @media (min-width: 992px) {
+        width: 100%;
+        border-radius: $border-radius 0 $border-radius $border-radius;
+    }
+    fieldset {
+        border: 0;
+    }
+    .fieldset-legend {
+        color: $blue-dark;
+        &:after {
+            font-size: 14px;
+            font-weight: normal;
+            margin-left: 5px;
+            content: "(Tick all that apply)";
+            color: $grey-dark;
+        }
+    }
+}
+.sentence-builder {
+    order: 1; // position item first, used only for tablet and mobile
+    display: block;
+    position: relative;
+    border-radius: $border-radius;
+    padding: $s-1;
+    border: 2px solid $c-brand-main;
+    overflow: hidden;
+    margin-bottom: $s-1;
+    background: $whiteish;
+    @media (min-width: 992px) {
+        display: flex;
+    }
+    .button {
+        width: 100%;
+        height: 36px;
+        line-height: 36px;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-left: auto;
+        margin-top: $s-1;
+        @media (min-width: 768px) {
+            width: auto;
+            margin-top: 0;
+        }
+    }
+    span {
+        display: inline-block;
+    }
+    > span {
+        margin-right: 5px;
+        @media (min-width: 992px) {
+            height: 44px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    }
+}
+// preference widget
+.preferences-interests {
+    padding: $s-1;
+    margin: 0;
+    legend {
+        width: 100%;
+        padding: $s-1 0 0 0;
+        margin: 0;
+    }
+    .js-form-type-checkbox {
+        width: auto;
+        min-height: 38px;
+        float: left;
+        position: relative;
+        border: 2px solid #009de0;
+        border-radius: 10px;
+        padding: 0;
+        margin: 0 10px 12px 0;
+        color: #009de0;
+        background: $whiteish;
+        label {
+            min-height: 1px;
+            font-size: 14px;
+            padding: 6px 30px 6px 12px;
+            margin: 0;
+            color: $blue-light;
+            &:before {
+                right: -9px;
+                left: auto;
+                top: 7px;
+            }
+            &:after {
+                top: 8px;
+                right: 4px;
+                left: auto;
+                background: $blue-lightest;
+            }
+        }
+        &.active {
+            border-color: $blue-dark;
+            background-color: $blue-dark;
+            color: $whiteish;
+            label {
+                color: $whiteish;
+                background: $blue-dark;
+                &:after {
+                    background: $green;
+                }
+            }
+        }
+    }
+    &.diabetes-and-me-question-fieldset {
+        padding: 0;
+        margin: 10px;
+        @media (min-width: 768px) {
+            margin: 3 * $s-2 5 * $s-2 $s-2 5 * $s-2;
+            .form-select {
+                width: 470px;
+            }
+        }
+        legend {
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            padding: 0;
+            margin: -4px 15px 0 10px;
+        }
+        .fieldset-wrapper {
+            margin-left: 10px;
+        }
+        .js-form-type-checkbox {
+            min-width: 1px;
+        }
+        .js-form-item {
+            width: 100%;
+            @media (min-width: 768px) {
+                width: auto;
+            }
+            &.form-item-diabetes-interest-skip-question-container-skip-checkbox {
+                width: auto;
+            }
+        }
+        .skip-info {
+            top: auto;
+        }
+        .skip-question-container {
+            width: 100%;
+            display: inline-block;
+            .js-form-type-checkbox {
+                &.active {
+                    background: none;
+                    label {
+                        color: $blue-light;
+                        &:after {
+                            background: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.js-diabetes-and-me-welcome,
+.js-diabetes-and-me-returning {
+    display: none;
+}
+
+//diabetes-and-me-widget
+.diabetes-and-me-widget {
+    padding: 0;
+    overflow: hidden;
+    header {
+        background-color: $c-brand-5inary;
+        padding: $s-2;
+        overflow: hidden;
+        position: relative;
+        figure {
+            margin: 0;
+            position: absolute;
+            bottom: 0;
+            right: 10px;
+            width: 22%;
+        }
+
+        .title {
+            p {
+                font-weight: 600;
+                padding-right: 22%;
+            }
+        }
+
+        @media (min-width: 480px) {
+            .title {
+                h2 {
+                    padding-right: 22%;
+                }
+            }
+        }
+
+        @media (min-width: 591px) {
+            figure {
+                width: 14%;
+            }
+        }
+
+        @media (min-width: 768px) {
+            padding: $s-3 $s-3 0 $s-3;
+            figure {
+                width: 25%;
+                left: inherit;
+                right: inherit;
+                position: relative;
+                float: left;
+            }
+            .title {
+                float: left;
+                width: 75%;
+                padding-left: $s-3;
+                padding-top: 6%;
+                p,
+                h2 {
+                    padding: 0;
+                }
+            }
+        }
+        @media (min-width: 992px) {
+            display: table;
+            height: 100%;
+            width: 100%;
+            figure {
+                width: 20%;
+                display: table-cell;
+                float: none;
+            }
+            .title {
+                width: 70%;
+                padding-top: 8%;
+                display: table-cell;
+                float: none;
+                vertical-align: top;
+                h2 {
+                    font-size: 42px;
+                    margin-bottom: 25px;
+                    max-width: 90%;
+                }
+            }
+        }
+    }
+    .content-container {
+        padding: $s-3;
+    }
+}
+
+.skip-info-container {
+    position: relative;
+    display: inline-block;
+}
+
+.group--quad-pair-single .dm-wide-card {
+    @media (min-width: 992px) {
+        width: calc(50% - 15px);
+    }
+
+    .card-content--title {
+        margin: 10%;
+    }
+
+    .dm-snippet-subtext {
+        color: $blue-light;
+        margin: 0;
+    }
+
+    h4 {
+        color: $c-brand-2ndary;
+    }
+}
+
+@media (min-width: 992px) {
+    .group--quad-pair-single .card-container:nth-child(4n),
+    .group--quad-pair-single .card-container:nth-child(2n) {
+        margin-right: 20px;
+    }
+
+    .card-container.eor:nth-child(4n),
+    .card-container.eor:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .card-container.eor {
+        margin-right: 0;
+    }
+}
+
+.search-region-container {
+    position: relative;
+}

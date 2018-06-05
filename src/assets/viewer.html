@@ -12,14 +12,17 @@
 
 <body>
     <div class="hotspot_editor">
-        <script>var hotspots = [
+        <script>
+            var hotspots = [
                 {
                     "type": "rect",
                     "x": 100,
                     "y": 200,
                     "width": 300,
                     "height": 150,
-                    "text": "Rectangle"
+                    "title": "Rectangle",
+                    "text": "Don't be a square",
+                    "link": "http://example.com"
                 },
                 {
                     "type": "ellipse",
@@ -27,25 +30,26 @@
                     "cy": 300,
                     "rx": 50,
                     "ry": 90,
-                    "text": "Ellipse"
+                    "text": "One infinite loop",
+                    "link": "http://example.com"
                 },
                 {
-                    "type": "polygon",
+                    "type": "Polygon",
                     "points": [[500, 600], [550, 525], [550, 575], [600, 500]],
+                    "title": "polygon",
                     "text": "You're a wizard, Harry"
                 }
             ];
 
             window.HotspotViewerData = {
-                image: "complications.png",
+                image: "../assets/complications.png",
                 width: 778,
                 height: 780,
                 hotspots: hotspots,
                 selector: "#viewer",
-                onClick: function (hotspot) {
-                    alert(hotspot.text);
-                }
-            }</script>
+                modal: true
+            }
+        </script>
         <div id="viewer">Loading viewer</div>
         <script defer src="../bundle.js"></script>
         <script>window.fetch || document.write('<script src="../polyfills.js"><\/script>')</script>

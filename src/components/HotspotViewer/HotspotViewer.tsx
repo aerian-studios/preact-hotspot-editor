@@ -27,8 +27,9 @@ export const HotspotViewer: FunctionalComponent<Props> = ({
             <Hotspot
                 key={index}
                 hotspot={hotspot}
-                colour={"rgba(0,0,0,0)"}
+                colour={"rgba(0,0,100,0.1)"}
                 onClick={() => onClick(hotspot)}
+                noEdit={true}
             />
         ))}
     </svg>

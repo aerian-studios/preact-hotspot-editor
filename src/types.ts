@@ -3,16 +3,22 @@ export type HotspotShape = RectHotspot | EllipseHotspot | PolygonHotspot;
 export type HotspotType = "rect" | "ellipse" | "polygon";
 
 export type Point = [number, number];
-export interface RectHotspot {
+
+interface BaseHotspot {
+    type: HotspotType;
+    text?: string;
+    title?: string;
+    link?: string;
+}
+export interface RectHotspot extends BaseHotspot {
     type: "rect";
     x: number;
     y: number;
     width: number;
     height: number;
-    text?: string;
 }
 
-export interface EllipseHotspot {
+export interface EllipseHotspot extends BaseHotspot {
     type: "ellipse";
     cx: number;
     cy: number;
@@ -21,7 +27,7 @@ export interface EllipseHotspot {
     text?: string;
 }
 
-export interface PolygonHotspot {
+export interface PolygonHotspot extends BaseHotspot {
     type: "polygon";
     points: Point[];
     text?: string;

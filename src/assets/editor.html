@@ -13,14 +13,17 @@
 
 <body>
     <div class="hotspot_editor">
-        <script>var hotspots = [
+        <script>
+            var hotspots = [
                 {
                     "type": "rect",
                     "x": 100,
                     "y": 200,
                     "width": 300,
                     "height": 150,
-                    "text": "Rectangle"
+                    "title": "Rectangle",
+                    "text": "Don't be a square",
+                    "link": "http://example.com"
                 },
                 {
                     "type": "ellipse",
@@ -28,11 +31,13 @@
                     "cy": 300,
                     "rx": 50,
                     "ry": 90,
-                    "text": "Ellipse"
+                    "text": "One infinite loop",
+                    "link": "http://example.com"
                 },
                 {
                     "type": "polygon",
                     "points": [[500, 600], [550, 525], [550, 575], [600, 500]],
+                    "title": "Polygon",
                     "text": "You're a wizard, Harry"
                 }
             ];

@@ -46,9 +46,9 @@ export class HotspotEditor extends Component<Props, State> {
         if (typeof this.state.selectedHotspot === "undefined") {
             return;
         }
-        const hotspots = [...this.props.hotspots];
+        const hotspots = [...this.state.hotspots];
         hotspots.splice(this.state.selectedHotspot, 1);
-        this.updateHotspots(hotspots);
+        this.updateHotspots(hotspots, undefined);
     };
 
     public updateHotspots = (
@@ -72,16 +72,13 @@ export class HotspotEditor extends Component<Props, State> {
         this.setState({ dirty });
     };
 
-    public textChanged = (ev: KeyboardEvent) => {
+    public textChanged = (hotspot: HotspotShape) => {
         if (isUndefined(this.state.selectedHotspot)) {
             return;
         }
         const hotspots = [...this.state.hotspots];
-        const hotspot = { ...hotspots[this.state.selectedHotspot] };
-        hotspot.text = (ev.currentTarget as HTMLTextAreaElement).value;
         hotspots[this.state.selectedHotspot] = hotspot;
         this.setState({ hotspots });
-        return "foo";
     };
     public render() {
         const { style, saveHotspots, hotspots, ...props } = this.props;
@@ -124,9 +121,8 @@ export class HotspotEditor extends Component<Props, State> {
                 <div>
                     {!isUndefined(this.state.selectedHotspot) && (
                         <TextEditor
-                            text={
+                            hotspot={
                                 this.state.hotspots[this.state.selectedHotspot]
-                                    .text
                             }
                             onChange={this.textChanged}
                         />

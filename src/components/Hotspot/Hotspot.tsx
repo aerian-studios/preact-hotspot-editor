@@ -14,6 +14,7 @@ interface Props {
     onClickLine?: (ev: MouseEvent, segment: number) => void;
     incomplete?: boolean;
     onClosePolygon?: MouseHandler;
+    noEdit?: boolean;
 }
 
 type MouseHandler = (ev: MouseEvent) => void;
@@ -150,7 +151,8 @@ const getShape = (
     colour: string,
     onMouseDown: MouseHandler,
     onClick: MouseHandler,
-    selected: boolean
+    selected: boolean,
+    noEdit?: boolean
 ) => {
     switch (hotspot.type) {
         case "ellipse":
@@ -162,8 +164,8 @@ const getShape = (
                     onMouseDown={onMouseDown}
                     onClick={onClick}
                     draggable={false}
-                    stroke-width={selected ? 2 : 0}
-                    stroke={selected ? "black" : "none"}
+                    stroke-width={selected ? 2 : 1}
+                    stroke={noEdit ? "none" : "black"}
                 />
             );
 
@@ -176,6 +178,8 @@ const getShape = (
                     onMouseDown={onMouseDown}
                     onClick={onClick}
                     draggable={false}
+                    stroke-width={selected ? 0 : 1}
+                    stroke={selected || noEdit ? "none" : "black"}
                 />
             );
 
@@ -188,8 +192,8 @@ const getShape = (
                     onMouseDown={onMouseDown}
                     onClick={onClick}
                     draggable={false}
-                    stroke-width={selected ? 2 : 0}
-                    stroke={selected ? "black" : "none"}
+                    stroke-width={selected ? 2 : 1}
+                    stroke={noEdit ? "none" : "black"}
                 />
             );
     }
@@ -204,12 +208,20 @@ export const Hotspot: FunctionalComponent<Props> = ({
     onVertexMouseDown,
     onClickLine,
     incomplete = false,
-    onClosePolygon
+    onClosePolygon,
+    noEdit
 }) => {
     return (
         <svg draggable={false}>
             {[
-                getShape(hotspot, colour, onMouseDown, onClick, !!selected),
+                getShape(
+                    hotspot,
+                    colour,
+                    onMouseDown,
+                    onClick,
+                    !!selected,
+                    noEdit
+                ),
                 selected &&
                     isPolygon(hotspot) &&
                     getLine(hotspot, onClickLine, incomplete),
