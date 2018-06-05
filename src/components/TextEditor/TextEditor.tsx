@@ -14,6 +14,7 @@ const textChanged = (
     onChange: (ev: HotspotShape) => void,
     title?: HTMLInputElement,
     text?: HTMLTextAreaElement,
+    linkText?: HTMLInputElement,
     link?: HTMLInputElement
 ) => {
     const hs = { ...hotspot };
@@ -25,6 +26,9 @@ const textChanged = (
     }
     if (link) {
         hs.link = link.value;
+    }
+    if (linkText) {
+        hs.linkText = linkText.value;
     }
     onChange(hs);
 };
@@ -62,11 +66,26 @@ export const TextEditor: FunctionalComponent<Props> = ({
         />
         <input
             type="text"
-            placeholder="Link"
+            placeholder="Link text"
             onKeyPress={ev =>
                 textChanged(
                     hotspot,
                     onChange,
+                    null,
+                    null,
+                    ev.currentTarget as HTMLInputElement
+                )
+            }
+            value={hotspot.linkText}
+        />
+        <input
+            type="text"
+            placeholder="Link URL"
+            onKeyPress={ev =>
+                textChanged(
+                    hotspot,
+                    onChange,
+                    null,
                     null,
                     null,
                     ev.currentTarget as HTMLInputElement

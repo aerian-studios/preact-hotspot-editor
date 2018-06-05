@@ -29,7 +29,7 @@ export class ModalViewer extends Component<Props, State> {
         if (!this.state.visible || !this.state.hotspot) {
             return;
         }
-        const { title, text, link } = this.state.hotspot;
+        const { title, text, link, linkText } = this.state.hotspot;
         return (
             <div class={styles.canvas} style={this.props.style}>
                 <div class={styles.overlay} onClick={this.hide} />
@@ -38,7 +38,9 @@ export class ModalViewer extends Component<Props, State> {
                     {text && <p>{text}</p>}
                     {link && (
                         <p>
-                            <a href={link}>Learn more</a>
+                            <a href={link} target="_blank">
+                                {linkText || "Learn more"}
+                            </a>
                         </p>
                     )}
                     <span class={styles.closebutton} onClick={this.hide}>

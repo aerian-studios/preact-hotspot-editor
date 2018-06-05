@@ -9,6 +9,7 @@ interface BaseHotspot {
     text?: string;
     title?: string;
     link?: string;
+    linkText?: string;
 }
 export interface RectHotspot extends BaseHotspot {
     type: "rect";

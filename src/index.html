@@ -43,7 +43,8 @@
                         "height": 150,
                         "title": "Rectangle",
                         "text": "Don't be a square",
-                        "link": "http://example.com"
+                        "link": "http://example.com",
+                        "linkText": "Example"
                     },
                     {
                         "type": "ellipse",
@@ -63,26 +64,26 @@
                 ];
 
 
-                window.HotspotEditorData = {
-                    image: "./assets/complications.png",
-                    width: 778,
-                    height: 780,
-                    hotspots: hotspots,
-                    selector: "#editor",
-                    saveHotspots: function (hotspots) {
-                        console.log("saving stuff", hotspots);
-                        return true;
-                    }
-                }
-
-                // window.HotspotViewerData = {
+                // window.HotspotEditorData = {
                 //     image: "./assets/complications.png",
                 //     width: 778,
                 //     height: 780,
                 //     hotspots: hotspots,
-                //     selector: "#viewer",
-                //     modal: true
+                //     selector: "#editor",
+                //     saveHotspots: function (hotspots) {
+                //         console.log("saving stuff", hotspots);
+                //         return true;
+                //     }
                 // }
+
+                window.HotspotViewerData = {
+                    image: "./assets/complications.png",
+                    width: 778,
+                    height: 780,
+                    hotspots: hotspots,
+                    selector: "#viewer",
+                    modal: true
+                }
 
             </script>
             <div id="editor"></div>
