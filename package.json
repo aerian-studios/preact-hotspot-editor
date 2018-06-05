@@ -8,7 +8,7 @@
     "build": "preact build --template src/index.html --no-prerender",
     "serve": "preact build --template src/index.html --no-prerender && preact serve",
     "dev": "preact watch --template src/index.html",
-    "lint": "tslint --project src",
+    "lint": "tslint --project .",
     "test": "jest ./tests",
     "precommit": "lint-staged"
   },
@@ -18,7 +18,7 @@
       "git add"
     ],
     "*.{ts,tsx}": [
-      "tslint --project src --fix",
+      "tslint --project . --fix",
       "prettier --write",
       "git add"
     ]

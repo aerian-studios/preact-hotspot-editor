@@ -39,7 +39,6 @@ export class HotspotEditor extends Component<Props, State> {
 
     public constructor(props: Props) {
         super(props);
-        console.log(props);
         this.setState({ hotspots: props.hotspots, dirty: false });
     }
 
