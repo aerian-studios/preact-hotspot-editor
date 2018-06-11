@@ -1,8 +1,8 @@
 {
-  "private": true,
   "name": "preact-hotspot-editor",
   "version": "0.0.0",
   "license": "MIT",
+  "unpkg": "dist/index.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build": "preact build --template src/index.html --no-prerender",
@@ -10,7 +10,8 @@
     "dev": "preact watch --template src/index.html",
     "lint": "tslint --project .",
     "test": "jest ./tests",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prepublishOnly": "npm run build"
   },
   "lint-staged": {
     "*.{js,jsx,css,md,scss}": [
@@ -23,6 +24,9 @@
       "git add"
     ]
   },
+  "files": [
+    "dist"
+  ],
   "eslintConfig": {
     "extends": "eslint-config-aerian"
   },

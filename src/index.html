@@ -31,7 +31,7 @@
     <%= htmlWebpackPlugin.options.ssr({
 			url: '/'
         }) %>
-
+        <button id='refresh'>Load</button>
         <div class="hotspot_editor">
             <script>
                 var hotspots = [
@@ -64,19 +64,19 @@
                 ];
 
 
-                // window.HotspotEditorData = {
-                //     image: "./assets/complications.png",
-                //     width: 778,
-                //     height: 780,
-                //     hotspots: hotspots,
-                //     selector: "#editor",
-                //     saveHotspots: function (hotspots) {
-                //         console.log("saving stuff", hotspots);
-                //         return true;
-                //     }
-                // }
+                const HotspotEditorData = {
+                    image: "./assets/complications.png",
+                    width: 778,
+                    height: 780,
+                    hotspots: hotspots,
+                    selector: "#editor",
+                    saveHotspots: function (hotspots) {
+                        console.log("saving stuff", hotspots);
+                        return true;
+                    }
+                }
 
-                window.HotspotViewerData = {
+                const HotspotViewerData = {
                     image: "./assets/complications.png",
                     width: 778,
                     height: 780,
@@ -85,10 +85,16 @@
                     modal: true
                 }
 
+                document.querySelectorAll("#refresh").forEach(el => el.addEventListener('click', () => {
+                    Hotspots.displayEditor(HotspotEditorData)
+                    Hotspots.displayViewer(HotspotViewerData);
+                }))
+
+
+
             </script>
             <div id="editor"></div>
             <div id="viewer"></div>
-
             <script defer src="<%= htmlWebpackPlugin.files.chunks['bundle'].entry %>"></script>
             <script>window.fetch || document.write('<script src="<%= htmlWebpackPlugin.files.chunks["polyfills"].entry %>"><\/script>')</script>
 </body>

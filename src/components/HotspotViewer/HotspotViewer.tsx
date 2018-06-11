@@ -2,9 +2,8 @@ import { FunctionalComponent, h } from "preact";
 
 import { HotspotShape } from "../../types";
 import { Hotspot } from "../Hotspot";
-import * as styles from "./HotspotViewer.scss";
 
-interface Props {
+export interface HotspotViewerProps {
     style?: any;
     hotspots: HotspotShape[];
     width: number;
@@ -13,7 +12,7 @@ interface Props {
     onClick: (hotspot: HotspotShape) => void;
 }
 
-export const HotspotViewer: FunctionalComponent<Props> = ({
+export const HotspotViewer: FunctionalComponent<HotspotViewerProps> = ({
     width,
     height,
     image,

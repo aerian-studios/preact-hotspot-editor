@@ -11,7 +11,7 @@ if ((module as any).hot) {
     // tslint:disable-next-line:no-var-requires
     require("preact/debug");
 }
-interface Props {
+export interface HotspotEditorProps {
     style?: any;
     width: number;
     height: number;
@@ -33,11 +33,11 @@ const INITIAL_STATE: State = {
 
 const tools: HotspotType[] = ["ellipse", "rect", "polygon"];
 
-export class HotspotEditor extends Component<Props, State> {
+export class HotspotEditor extends Component<HotspotEditorProps, State> {
     public state = INITIAL_STATE;
     public currentUrl?: string;
 
-    public constructor(props: Props) {
+    public constructor(props: HotspotEditorProps) {
         super(props);
         this.setState({ hotspots: props.hotspots, dirty: false });
     }
@@ -46,7 +46,7 @@ export class HotspotEditor extends Component<Props, State> {
         if (typeof this.state.selectedHotspot === "undefined") {
             return;
         }
-        const hotspots = [...this.state.hotspots];
+        const hotspots: HotspotShape[] = [...this.state.hotspots];
         hotspots.splice(this.state.selectedHotspot, 1);
         this.updateHotspots(hotspots, undefined);
     };

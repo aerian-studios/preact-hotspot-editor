@@ -49,9 +49,10 @@ var hotspots = [
 ```
 
 The syntax is similar to display the image with hotspots. Instead of the
-`saveHotspots` callback, there is an `onClick` callback thayt is called when a
+`saveHotspots` callback, there is an `onClick` callback that is called when a
 hotspot is clicked. It is passed the hotspot object. You probably want the
-`text` property.
+`text` property. ALternatively, set the `modal` property to `true` and it will
+open a modal on click.
 
 ```html
 <script>
@@ -85,9 +86,7 @@ var hotspots = [
         height: 780,
         hotspots: hotspots,
         selector: "#viewer",
-        onClick: function (hotspot) {
-            alert(hotspot.text);
-        }
+        modal: true
     }
 </script>
 <div id="viewer">Loading viewer</div>

@@ -5,6 +5,7 @@ import * as styles from "./ModalViewer.scss";
 
 interface Props {
     style?: any;
+    ref?: (ref: ModalViewer) => void;
 }
 interface State {
     visible: boolean;
@@ -27,7 +28,7 @@ export class ModalViewer extends Component<Props, State> {
 
     public render() {
         if (!this.state.visible || !this.state.hotspot) {
-            return;
+            return null;
         }
         const { title, text, link, linkText } = this.state.hotspot;
         return (
