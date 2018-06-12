@@ -1,6 +1,6 @@
 {
   "name": "preact-hotspot-editor",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "unpkg": "dist/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "lint": "tslint --project .",
     "test": "jest ./tests",
     "precommit": "lint-staged",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "parcel build src/index.js"
   },
   "lint-staged": {
     "*.{js,jsx,css,md,scss}": [
@@ -36,7 +36,7 @@
   "devDependencies": {
     "@types/jest": "^22.2.3",
     "eslint": "^4.19.1",
-    "eslint-config-aerian": "^1.0.1",
+    "eslint-config-aerian": "^1.0.3",
     "husky": "^0.14.3",
     "hygen-react-typescript": "^1.0.1",
     "identity-obj-proxy": "^3.0.0",
@@ -44,6 +44,9 @@
     "jest": "^22.4.3",
     "lint-staged": "^7.1.0",
     "node-sass": "^4.9.0",
+    "parcel-bundler": "^1.8.1",
+    "postcss": "^6.0.22",
+    "postcss-modules": "^1.1.0",
     "preact-cli": "^2.1.0",
     "preact-cli-plugin-netlify": "^1.1.0",
     "preact-render-spy": "^1.2.1",
@@ -52,7 +55,7 @@
     "ts-loader": "3.5.0",
     "tslint": "^5.10.0",
     "tslint-config-aerian": "^1.0.2",
-    "typescript": "^2.8.3",
+    "typescript": "^2.9.1",
     "typings-for-css-modules-loader": "^1.7.0"
   },
   "dependencies": {

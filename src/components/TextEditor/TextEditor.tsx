@@ -58,7 +58,7 @@ export const TextEditor: FunctionalComponent<Props> = ({
                 textChanged(
                     hotspot,
                     onChange,
-                    null,
+                    undefined,
                     ev.currentTarget as HTMLTextAreaElement
                 )
             }
@@ -71,8 +71,8 @@ export const TextEditor: FunctionalComponent<Props> = ({
                 textChanged(
                     hotspot,
                     onChange,
-                    null,
-                    null,
+                    undefined,
+                    undefined,
                     ev.currentTarget as HTMLInputElement
                 )
             }
@@ -85,9 +85,9 @@ export const TextEditor: FunctionalComponent<Props> = ({
                 textChanged(
                     hotspot,
                     onChange,
-                    null,
-                    null,
-                    null,
+                    undefined,
+                    undefined,
+                    undefined,
                     ev.currentTarget as HTMLInputElement
                 )
             }

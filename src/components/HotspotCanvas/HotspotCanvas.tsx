@@ -51,7 +51,8 @@ export class HotspotCanvas extends Component<Props, State> {
         props: Partial<Props>,
         state: State
     ): State {
-        const { hotspots, drawingTool } = props;
+        const { drawingTool } = props;
+        const hotspots = props.hotspots || [];
         switch (drawingTool) {
             case "polygon":
                 return {
