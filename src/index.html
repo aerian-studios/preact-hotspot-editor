@@ -32,6 +32,7 @@
 			url: '/'
         }) %>
         <button id='refresh'>Load</button>
+        <textarea id='json'></textarea>
         <div class="hotspot_editor">
             <script>
                 var hotspots = [
@@ -63,6 +64,7 @@
                     }
                 ];
 
+                const field = document.getElementById('json')
 
                 const HotspotEditorData = {
                     image: "./assets/complications.png",
@@ -73,6 +75,9 @@
                     saveHotspots: function (hotspots) {
                         console.log("saving stuff", hotspots);
                         return true;
+                    },
+                    onChange: function (hotspots) {
+                        field.value = JSON.stringify(hotspots);
                     }
                 }
 
