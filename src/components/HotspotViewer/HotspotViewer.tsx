@@ -26,7 +26,7 @@ export const HotspotViewer: FunctionalComponent<HotspotViewerProps> = ({
             <Hotspot
                 key={index}
                 hotspot={hotspot}
-                colour={"rgba(0,0,100,0.1)"}
+                colour={"rgba(0,0,0,0)"}
                 onClick={() => onClick(hotspot)}
                 noEdit={true}
             />
