@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>react-hotspot-editor</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#673ab8">
+</head>
+
+<body>
+    <div class="hotspot_editor">
+        <div id="viewer">Loading viewer</div>
+        <p>This goes underneath</p>
+        <script src="/bundle.js"></script>
+        <script>
+            var hotspots = [
+                {
+                    "type": "rect",
+                    "x": 100,
+                    "y": 200,
+                    "width": 300,
+                    "height": 150,
+                    "title": "Rectangle",
+                    "text": "Don't be a square",
+                    "link": "http://example.com",
+                    "linkText": "Example"
+                },
+                {
+                    "type": "ellipse",
+                    "cx": 300,
+                    "cy": 300,
+                    "rx": 50,
+                    "ry": 90,
+                    "text": "One infinite loop",
+                    "link": "http://example.com"
+                },
+                {
+                    "type": "polygon",
+                    "points": [[500, 600], [550, 525], [550, 575], [600, 500]],
+                    "title": "polygon",
+                    "text": "You're a wizard, Harry"
+                }
+            ];
+
+            var HotspotViewerData = {
+                image: "../assets/complications.png",
+                width: 778,
+                height: 780,
+                hotspots: hotspots,
+                selector: "#viewer",
+                modal: true
+            }
+            window.Hotspots.displayViewer(HotspotViewerData);
+        </script>
+        <script>window.fetch || document.write('<script src="../polyfills.js"><\/script>')</script>
+    </div>
+</body>
+
+</html>

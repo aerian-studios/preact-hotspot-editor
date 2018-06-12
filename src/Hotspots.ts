@@ -16,13 +16,8 @@ export type HotspotViewerConfig = {
 } & HotspotViewerProps;
 
 export default class Hotspots {
-    public editor?: Element;
-
-    public viewer?: Element;
-
     public displayEditor = (editorConfig: HotspotEditorConfig) => {
-        const editorTarget =
-            this.editor || document.querySelector(editorConfig.selector);
+        const editorTarget = document.querySelector(editorConfig.selector);
 
         if (!editorTarget) {
             console.error(
@@ -31,16 +26,12 @@ export default class Hotspots {
 
             return;
         }
-        this.editor = render(
-            h(HotspotEditor, editorConfig),
-            document.body,
-            editorTarget
-        );
+        editorTarget.innerHTML = "";
+        render(h(HotspotEditor, editorConfig), editorTarget);
     };
 
     public displayViewer = (displayConfig: HotspotViewerConfig) => {
-        const displayTarget =
-            this.viewer || document.querySelector(displayConfig.selector);
+        const displayTarget = document.querySelector(displayConfig.selector);
 
         if (!displayTarget) {
             console.error(
@@ -69,10 +60,7 @@ export default class Hotspots {
 
             render(h(ModalViewer, config), document.body);
         }
-        this.viewer = render(
-            h(HotspotViewer, displayConfig),
-            document.body,
-            displayTarget
-        );
+        displayTarget.innerHTML = "";
+        render(h(HotspotViewer, displayConfig), displayTarget);
     };
 }
