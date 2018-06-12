@@ -43,7 +43,7 @@ export const TextEditor: FunctionalComponent<Props> = ({
         <input
             type="text"
             placeholder="Title"
-            onKeyPress={ev =>
+            onInput={ev =>
                 textChanged(
                     hotspot,
                     onChange,
@@ -54,7 +54,7 @@ export const TextEditor: FunctionalComponent<Props> = ({
         />
         <textarea
             placeholder="Description"
-            onKeyPress={ev =>
+            onInput={ev =>
                 textChanged(
                     hotspot,
                     onChange,
@@ -67,7 +67,7 @@ export const TextEditor: FunctionalComponent<Props> = ({
         <input
             type="text"
             placeholder="Link text"
-            onKeyPress={ev =>
+            onInput={ev =>
                 textChanged(
                     hotspot,
                     onChange,
@@ -81,7 +81,7 @@ export const TextEditor: FunctionalComponent<Props> = ({
         <input
             type="text"
             placeholder="Link URL"
-            onKeyPress={ev =>
+            onInput={ev =>
                 textChanged(
                     hotspot,
                     onChange,
