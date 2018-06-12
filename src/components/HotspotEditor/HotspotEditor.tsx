@@ -17,6 +17,7 @@ export interface HotspotEditorProps {
     height: number;
     hotspots: HotspotShape[];
     saveHotspots?: (hotspots: HotspotShape[]) => boolean;
+    onChange?: (hotspots: HotspotShape[]) => boolean;
     image?: string;
 }
 interface State {
@@ -55,11 +56,14 @@ export class HotspotEditor extends Component<HotspotEditorProps, State> {
         hotspots: HotspotShape[],
         selectedHotspot?: number
     ) => {
+        if (this.props.onChange) {
+            this.props.onChange(hotspots);
+        }
         this.setState({
             hotspots,
             selectedIndex: undefined,
             selectedHotspot,
-            dirty: true
+            dirty: !this.props.onChange
         });
     };
 
@@ -78,7 +82,7 @@ export class HotspotEditor extends Component<HotspotEditorProps, State> {
         }
         const hotspots = [...this.state.hotspots];
         hotspots[this.state.selectedHotspot] = hotspot;
-        this.setState({ hotspots });
+        this.updateHotspots(hotspots, this.state.selectedHotspot);
     };
     public render() {
         const { style, saveHotspots, hotspots, ...props } = this.props;
