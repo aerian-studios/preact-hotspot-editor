@@ -1,6 +1,6 @@
 {
   "name": "preact-hotspot-editor",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "unpkg": "dist/index.js",
   "scripts": {
