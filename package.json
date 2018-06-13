@@ -1,6 +1,6 @@
 {
   "name": "preact-hotspot-editor",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "license": "MIT",
   "main": "dist/Hotspots.js",
   "unpkg": "dist/index.js",
@@ -13,7 +13,7 @@
     "lint": "tslint --project .",
     "test": "jest ./tests",
     "precommit": "lint-staged",
-    "prepublishOnly": "parcel build src/index.js"
+    "prepublishOnly": "parcel build src/index.js src/Hotspots.ts"
   },
   "lint-staged": {
     "*.{js,jsx,css,md,scss}": [
