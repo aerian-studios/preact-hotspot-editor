@@ -1,12 +1,14 @@
 {
   "name": "preact-hotspot-editor",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "license": "MIT",
+  "main": "dist/index.js",
   "unpkg": "dist/index.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build": "preact build --template src/index.html --no-prerender",
     "serve": "preact build --template src/index.html --no-prerender && preact serve",
+    "demo": "preact watch --template src/demo/index.html",
     "dev": "preact watch --template src/index.html",
     "lint": "tslint --project .",
     "test": "jest ./tests",
